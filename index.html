@@ -438,6 +438,10 @@ Error message and password prompt
 
 <li>Linux Architecture</li>
 
+<li>Linux Login</li>
+
+<li>Login Security</li>
+
 <li>Project approach</li>
 
 <li>Timeline</li>
@@ -447,6 +451,8 @@ Error message and password prompt
 <li>What all this is about?</li>
 
 <li>Who should read this?</li>
+
+<li>Windows Login</li>
 
 <li>Windows_2000_architecture.svg</li>
 
@@ -9232,7 +9238,7 @@ very-muted-foreground: #888888</pre>
 <div created="20170909154550348" modified="20170909191525591" title="$:/state/toc/Contents-Before you Begin-209360082">
 <pre>open</pre>
 </div>
-<div list="__Introduction__ [[Before you Begin]] [[Project approach]] Architecture" title="$:/StoryList">
+<div list="[[Linux Login]] [[Windows Login]] [[Login Security]] [[Before you Begin]] [[What all this is about?]] Architecture [[Linux Architecture]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -9248,7 +9254,7 @@ very-muted-foreground: #888888</pre>
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///home/hackintosh/BTP/index.html&quot;
+            &quot;text&quot;: &quot;file:///home/hackintosh/BTP/WindowsVsLinuxSecurity/index.html&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
@@ -9268,7 +9274,7 @@ very-muted-foreground: #888888</pre>
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/home/hackintosh/BTP/index.html&quot;
+            &quot;text&quot;: &quot;/home/hackintosh/BTP/WindowsVsLinuxSecurity/index.html&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -9876,8 +9882,8 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20170907103121402" modified="20170907103121402" title="$:/view">
 <pre>pop</pre>
 </div>
-<div created="20170911084208364" modified="20170911084450319" tags="Contents" title="Architecture">
-<pre>Lets look at the architecture differencce between the two of the operating system.
+<div created="20170911084208364" modified="20171028175359950" tags="Contents" title="Architecture">
+<pre>Lets look at the architecture difference between the two of the operating system.
 
 &lt;$list filter=&quot;[!has[draft.of]tag[Architecture]sort[created]]&quot;&gt;
 
@@ -9971,8 +9977,73 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 <div created="20170908212738743" modified="20170908212738743" title="Introduction">
 <pre></pre>
 </div>
-<div created="20170908055119717" modified="20170911084555279" tags="Architecture" title="Linux Architecture">
+<div created="20170908055119717" modified="20171028174916074" tags="Architecture" title="Linux Architecture">
+<pre>We can think of Linux Kernel architecture to be divided into two levels – User Space and Kernel Space as we have seen in case of windows os.
+
+''User Space:''&lt;br/&gt;
+This is where the user applications are executed. There is also the GNU C Library (glibc). This provides the system call interface that connects to the kernel and provides the mechanism to transition between the user-space application and the kernel.
+
+''Kernel Space:''&lt;br/&gt;
+Here, the Linux Kernel exists which can be further divided into three levels. At the top is the system call interface, which implements the basic functions such as read and write. Below the system call interface is the kernel code, which can be more accurately defined as the architecture-independent kernel code. This code is common to all of the processor architectures supported by Linux. Below this is the architecture-dependent code, which forms what is more commonly called a BSP (Board Support Package). This code serves as the processor and platform-specific code for the given architecture.
+
+''Properties of the Linux Kernel''&lt;br/&gt;
+The kernel is layered into a number of distinct subsystems. Linux can also be considered monolithic because it lumps all of the basic services into the kernel. This differs from a microkernel architecture where the kernel provides basic services such as communication, I/O, and memory and process management, and more specific services are plugged in to the microkernel layer.
+
+&lt;center&gt;[img[compare|images/linux_kernel.png]]&lt;/center&gt;
+''System Call Interface''
+
+The SCI is a thin layer that provides the means to perform function calls from user space into the kernel. As discussed previously, this interface can be architecture dependent, even within the same processor family. You can find the SCI implementation in ./linux/kernel, as well as architecture-dependent portions in ./linux/arch.
+
+''Process Management''
+
+The kernel is in charge of creating and destroying processes and handling their connection to the outside
+world (input and output). Communication among different processes (through signals, pipes, or interprocess
+communication primitives) is basic to the overall system functionality and is also handled by the kernel. In
+addition, the scheduler, which controls how processes share the CPU, is part of process management.
+
+''Memory management''
+
+Another important resource that’s managed by the kernel is memory. For efficiency, given the way that the hardware manages virtual memory, memory is managed in what are called pages (4KB in size for most architectures). Linux includes the means to manage the available memory, as well as the hardware mechanisms for physical and virtual mappings.
+
+''Filesystems''
+
+Linux is heavily based on the filesystem concept; almost everything in Linux can be treated as a file. The
+kernel builds a structured filesystem on top of unstructured hardware, and the resulting file abstraction is
+heavily used throughout the whole system. In addition, Linux supports multiple filesystem types, that is,
+different ways of organizing data on the physical medium. For example, disks may be formatted with the
+Linux­ standard ext3 filesystem, the commonly used FAT filesystem or several others.
+
+''Device control''
+
+Almost every system operation eventually maps to a physical device. With the exception of the processor,
+memory, and a very few other entities, any and all device control operations are performed by code that is
+specific to the device being addressed. That code is called a device driver. The kernel must have embedded
+in it a device driver for every peripheral present on a system, from the hard drive to the keyboard and the
+tape drive.
+
+''Networking''
+
+Networking must be managed by the operating system, because most network operations are not specific to
+a process: incoming packets are asynchronous events. The packets must be collected, identified, and
+dispatched before a process takes care of them. The system is in charge of delivering data packets across
+program and network interfaces, and it must control the execution of programs according to their network
+activity. Additionally, all the routing and address resolution issues are implemented within the kernel.
+
+''Interesting features of the Linux kernel''
+
+While much of Linux is independent of the architecture on which it runs, there are elements that must consider the architecture for normal operation and for efficiency. The ./linux/arch subdirectory defines the architecture-dependent portion of the kernel source contained in a number of subdirectories that are specific to the architecture (collectively forming the BSP). For a typical desktop, the i386 directory is used. Each architecture subdirectory contains a number of other subdirectories that focus on a particular aspect of the kernel, such as boot, kernel, memory management, and others. You can find the architecture-dependent code in ./linux/arch.
+</pre>
+</div>
+<div created="20171028180138383" modified="20171028180154211" tags="[[Login Security]]" title="Linux Login">
 <pre></pre>
+</div>
+<div created="20171028175506793" modified="20171028180041968" tags="Contents" title="Login Security">
+<pre>&lt;$list filter=&quot;[!has[draft.of]tag[Login Security]sort[created]]&quot;&gt;
+
+&lt;$link to={{!!title}}&gt;
+&lt;$view field=&quot;title&quot;/&gt;
+&lt;/$link&gt;
+&lt;/$list&gt;</pre>
 </div>
 <div created="20170909154331971" modified="20170911084757886" tags="Contents" title="Project approach">
 <pre>---
@@ -9984,7 +10055,7 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 <div title="Untitled">
 <pre>&lt;span class=&quot; tc-reveal&quot;&gt;&lt;span class=&quot; tc-reveal&quot;&gt;unfold it).&lt;/span&gt;&lt;/span&gt;</pre>
 </div>
-<div created="20170909132710614" modified="20170909193020095" tags="[[Before you Begin]]" title="What all this is about?">
+<div created="20170909132710614" modified="20171028175842650" tags="[[Before you Begin]]" title="What all this is about?">
 <pre>its like a timeline</pre>
 </div>
 <div created="20170909153045879" modified="20170909205058450" tags="[[Before you Begin]]" title="Who should read this?">
@@ -10010,6 +10081,9 @@ All contain available here is just for education purpose only(you already know t
 
 ---
 &lt;center&gt;[[Next|Contribute/Edit or Save offline content?]]</pre>
+</div>
+<div created="20171028175738057" modified="20171028180102880" tags="[[Login Security]]" title="Windows Login">
+<pre></pre>
 </div>
 <div title="Windows_2000_architecture.svg" type="image/svg+xml">
 <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
