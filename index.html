@@ -246,6 +246,12 @@ Error message and password prompt
 
 <li>$:/state/toc/Contents-Before you Begin-209360082</li>
 
+<li>$:/state/toc/Contents-Login Security-209360082</li>
+
+<li>$:/state/toc/Contents-Program Execution-209360082</li>
+
+<li>$:/state/toc/Contents/Program Execution-Program Loading-209360082</li>
+
 <li>$:/StoryList</li>
 
 <li>$:/temp/info-plugin</li>
@@ -438,11 +444,19 @@ Error message and password prompt
 
 <li>Linux Architecture</li>
 
+<li>Linux Loader</li>
+
 <li>Linux Login</li>
 
 <li>Login Security</li>
 
+<li>Program Execution</li>
+
+<li>Program Loading</li>
+
 <li>Project approach</li>
+
+<li>Services Used</li>
 
 <li>Timeline</li>
 
@@ -451,6 +465,8 @@ Error message and password prompt
 <li>What all this is about?</li>
 
 <li>Who should read this?</li>
+
+<li>Windows Loader</li>
 
 <li>Windows Login</li>
 
@@ -9238,7 +9254,16 @@ very-muted-foreground: #888888</pre>
 <div created="20170909154550348" modified="20170909191525591" title="$:/state/toc/Contents-Before you Begin-209360082">
 <pre>open</pre>
 </div>
-<div list="[[Linux Login]] [[Windows Login]] [[Login Security]] [[Before you Begin]] [[What all this is about?]] Architecture [[Linux Architecture]] __Introduction__" title="$:/StoryList">
+<div created="20171028180156863" modified="20171029100428978" title="$:/state/toc/Contents-Login Security-209360082">
+<pre>open</pre>
+</div>
+<div created="20171029100419970" modified="20171029100419970" title="$:/state/toc/Contents-Program Execution-209360082">
+<pre>open</pre>
+</div>
+<div created="20171029102407659" modified="20171029102407659" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
+<pre>open</pre>
+</div>
+<div list="[[Login Security]] [[Program Execution]] [[Program Loading]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10034,6 +10059,9 @@ activity. Additionally, all the routing and address resolution issues are implem
 While much of Linux is independent of the architecture on which it runs, there are elements that must consider the architecture for normal operation and for efficiency. The ./linux/arch subdirectory defines the architecture-dependent portion of the kernel source contained in a number of subdirectories that are specific to the architecture (collectively forming the BSP). For a typical desktop, the i386 directory is used. Each architecture subdirectory contains a number of other subdirectories that focus on a particular aspect of the kernel, such as boot, kernel, memory management, and others. You can find the architecture-dependent code in ./linux/arch.
 </pre>
 </div>
+<div created="20171029102420210" modified="20171029102435012" tags="[[Program Loading]]" title="Linux Loader">
+<pre></pre>
+</div>
 <div created="20171028180138383" modified="20171028180154211" tags="[[Login Security]]" title="Linux Login">
 <pre></pre>
 </div>
@@ -10045,9 +10073,30 @@ While much of Linux is independent of the architecture on which it runs, there a
 &lt;/$link&gt;
 &lt;/$list&gt;</pre>
 </div>
+<div created="20171029100256702" modified="20171029100515120" tags="Contents" title="Program Execution">
+<pre>&lt;$list filter=&quot;[!has[draft.of]tag[Program Execution]sort[created]]&quot;&gt;
+
+&lt;$link to={{!!title}}&gt;
+&lt;$view field=&quot;title&quot;/&gt;
+&lt;/$link&gt;
+&lt;/$list&gt;</pre>
+</div>
+<div created="20171028183529539" modified="20171029102527710" tags="[[Program Execution]]" title="Program Loading">
+<pre>! &lt;center&gt;''Loader''&lt;/center&gt;
+In computing, a loader is the part of an operating system that is responsible for loading programs and libraries. It is one of the essential stages in the process of starting a program, as it places programs into memory and prepares them for execution. Loading a program involves reading the contents of the executable file containing the program instructions into memory, and then carrying out other required preparatory tasks to prepare the executable for running. Once loading is complete, the operating system starts the program by passing control to the loaded program code.
+&lt;$list filter=&quot;[!has[draft.of]tag[Program Loading]sort[created]]&quot;&gt;
+
+&lt;$link to={{!!title}}&gt;
+&lt;$view field=&quot;title&quot;/&gt;
+&lt;/$link&gt;
+&lt;/$list&gt;</pre>
+</div>
 <div created="20170909154331971" modified="20170911084757886" tags="Contents" title="Project approach">
 <pre>---
 &lt;center&gt; [[Next|Architecture]]&lt;/center&gt;</pre>
+</div>
+<div created="20171029102103403" modified="20171029102119663" tags="[[Before you Begin]]" title="Services Used">
+<pre></pre>
 </div>
 <div created="20170908043602851" modified="20170908043623563" tags="timeline" title="Timeline">
 <pre></pre>
@@ -10081,6 +10130,9 @@ All contain available here is just for education purpose only(you already know t
 
 ---
 &lt;center&gt;[[Next|Contribute/Edit or Save offline content?]]</pre>
+</div>
+<div created="20171029102255634" modified="20171029102324874" tags="[[Program Loading]]" title="Windows Loader">
+<pre></pre>
 </div>
 <div created="20171028175738057" modified="20171028180102880" tags="[[Login Security]]" title="Windows Login">
 <pre></pre>
