@@ -9248,8 +9248,8 @@ very-muted-foreground: #888888</pre>
 <div created="20170907101759074" modified="20170911084835962" title="$:/state/tab/sidebar--1835078512">
 <pre>Contents</pre>
 </div>
-<div created="20170908055139057" modified="20170909132255871" title="$:/state/toc/Contents-Architecture-209360082">
-<pre>close</pre>
+<div created="20170908055139057" modified="20171029152632605" title="$:/state/toc/Contents-Architecture-209360082">
+<pre>open</pre>
 </div>
 <div created="20170909154550348" modified="20170909191525591" title="$:/state/toc/Contents-Before you Begin-209360082">
 <pre>open</pre>
@@ -9257,13 +9257,13 @@ very-muted-foreground: #888888</pre>
 <div created="20171028180156863" modified="20171029100428978" title="$:/state/toc/Contents-Login Security-209360082">
 <pre>open</pre>
 </div>
-<div created="20171029100419970" modified="20171029100419970" title="$:/state/toc/Contents-Program Execution-209360082">
+<div created="20171029100419970" modified="20171029152808009" title="$:/state/toc/Contents-Program Execution-209360082">
 <pre>open</pre>
 </div>
 <div created="20171029102407659" modified="20171029102407659" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
 <pre>open</pre>
 </div>
-<div list="[[Login Security]] [[Program Execution]] [[Program Loading]] __Introduction__" title="$:/StoryList">
+<div list="[[Windows Loader]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10131,8 +10131,10 @@ All contain available here is just for education purpose only(you already know t
 ---
 &lt;center&gt;[[Next|Contribute/Edit or Save offline content?]]</pre>
 </div>
-<div created="20171029102255634" modified="20171029102324874" tags="[[Program Loading]]" title="Windows Loader">
-<pre></pre>
+<div created="20171029102255634" modified="20171029221237525" tags="[[Program Loading]]" title="Windows Loader">
+<pre>Before running the code from your program windows run ntdll.dll having its first routine LdrInitializeThunk. When a user mode thread is readied to begin initial execution after being created, the initial context that is realized is not the context value supplied to NtCreateThread (which would eventually end up in the user-supplied thread entry point). Instead, execution really begins at LdrInitializeThunk within NTDLL, which is supplied a CONTEXT record that describes the initially requested state of the thread (as supplied to NtCreateThread, or as created by NtCreateThreadEx on Windows Vista). This context record is provided as an argument to LdrInitializeThunk, in order to allow for control to (eventually) be transferred to the user-supplied thread entry point.&lt;br/&gt;
+
+After that control is transfer to CreateThread API (and even the NtCreateThread system service that is used to implement the Win32 CreateThread) which provide the illusion that a thread begins its execution at a specified start routine (or instruction pointer, in the case of NtCreateThread)</pre>
 </div>
 <div created="20171028175738057" modified="20171028180102880" tags="[[Login Security]]" title="Windows Login">
 <pre></pre>
