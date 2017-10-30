@@ -9215,7 +9215,7 @@ very-muted-foreground: #888888</pre>
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20170910175903858" title="$:/state/showeditpreview">
+<div created="20170907105631882" modified="20171030042952817" title="$:/state/showeditpreview">
 <pre>yes</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
@@ -9245,7 +9245,7 @@ very-muted-foreground: #888888</pre>
 <div created="20170907103514356" modified="20170910182052592" title="$:/state/tab/moresidebar-401116514">
 <pre>$:/core/ui/MoreSideBar/Tags</pre>
 </div>
-<div created="20170907101759074" modified="20170911084835962" title="$:/state/tab/sidebar--1835078512">
+<div created="20170907101759074" modified="20171030043509552" title="$:/state/tab/sidebar--1835078512">
 <pre>Contents</pre>
 </div>
 <div created="20170908055139057" modified="20171029152632605" title="$:/state/toc/Contents-Architecture-209360082">
@@ -10131,10 +10131,36 @@ All contain available here is just for education purpose only(you already know t
 ---
 &lt;center&gt;[[Next|Contribute/Edit or Save offline content?]]</pre>
 </div>
-<div created="20171029102255634" modified="20171029221237525" tags="[[Program Loading]]" title="Windows Loader">
-<pre>Before running the code from your program windows run ntdll.dll having its first routine LdrInitializeThunk. When a user mode thread is readied to begin initial execution after being created, the initial context that is realized is not the context value supplied to NtCreateThread (which would eventually end up in the user-supplied thread entry point). Instead, execution really begins at LdrInitializeThunk within NTDLL, which is supplied a CONTEXT record that describes the initially requested state of the thread (as supplied to NtCreateThread, or as created by NtCreateThreadEx on Windows Vista). This context record is provided as an argument to LdrInitializeThunk, in order to allow for control to (eventually) be transferred to the user-supplied thread entry point.&lt;br/&gt;
+<div created="20171029102255634" modified="20171030043247353" tags="[[Program Loading]]" title="Windows Loader">
+<pre>A Win32 process is created when an application calls one of the process creation functions, such as CreateProcess, CreateProcessAsUser, or CreateProcessWithLogonW. Creating a Win32 process consists of several stages carried out in three parts of the operating system: the Win32 client-side library Kernel32.dll, the Windows 2000 executive, and the Win32 subsystem process (Csrss). Because of the multiple environment subsystem architecture of Windows 2000, creating a Windows 2000 executive process object (which other subsystems can use) is separated from the work involved in creating a Win32 process. So, although the following description of the flow of the Win32 CreateProcess function is complicated, keep in mind that part of the work is specific to the semantics added by the Win32 subsystem as opposed to the core work needed to create a Windows 2000 executive process object.
 
-After that control is transfer to CreateThread API (and even the NtCreateThread system service that is used to implement the Win32 CreateThread) which provide the illusion that a thread begins its execution at a specified start routine (or instruction pointer, in the case of NtCreateThread)</pre>
+The following list summarizes the main stages of creating a process with the Win32 CreateProcess function.
+
+* Open the image file (.exe) to be executed inside the process.
+* Create the Windows 2000 executive process object.
+
+* Create the initial thread (stack, context, and Windows 2000 executive thread object).
+ 
+* Notify the Win32 subsystem of the new process so that it can set up for the new process and thread.
+ 
+* Start execution of the initial thread (unless the CREATE_SUSPENDED flag was specified).
+ 
+* In the context of the new process and thread, complete the initialization of the address space (such as load required DLLs) and begin execution of the program.
+[[Detailed procedure here|https://www.microsoft.com/mspress/books/sampchap/4354a.aspx]]&lt;br/&gt;
+
+!! Performing Process Initialization in the Context of the New Process
+
+After CreateProcess done its work a new thread is created. KiInitializeContextThread, which is called by KeInitializeThread, builds the initial context of the thread and the thread's kernel stack. Lowers the IRQL level from DPC/dispatch level to APC (asynchronous procedure call) level.The KiThreadStartup routine performs the following steps:
+
+* Enables working set expansion.
+
+* Queues a user-mode APC to the new thread to execute the user-mode thread startup routine LdrInitializeThunk inside Ntdll.dll.
+
+* Lowers the IRQL level to 0, causing the APC to fire and LdrInitializeThunk to be called. The LdrInitializeThunk routine initializes the loader, heap manager, NLS tables, thread-local storage (TLS) array, and critical section structures. It then loads any required DLLs and calls the DLL entry points with the DLL_PROCESS_ATTACH function code.
+
+* If the process being created is a debuggee, all threads in the process are suspended. (Threads might have been created during step 3.) A create process message is then sent to the process's debug port (the Win32 subsystem function port because this is a Win32 process) so that the subsystem can deliver the process startup debug event (CREATE_PROCESS_DEBUG_INFO) to the appropriate debugger process. KiThreadStartup then waits for the Win32 subsystem to get the reply from the debugger (via the ContinueDebugEvent function). When the Win32 subsystem replies, all the threads are resumed.
+
+Finally, the image begins execution in user mode. This is done by creating a trap frame that specifies the previous mode as user and the address to return to as the main entry point of the image. Thus, when the trap that caused the thread to start execution in kernel mode is dismissed, and the control is transfer to CreateThread API again (and even the NtCreateThread system service that is used to implement the Win32 CreateThread) which provide the illusion that a thread begins its execution at a specified start routine (or instruction pointer, in the case of NtCreateThread)</pre>
 </div>
 <div created="20171028175738057" modified="20171028180102880" tags="[[Login Security]]" title="Windows Login">
 <pre></pre>
