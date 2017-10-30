@@ -158,6 +158,10 @@ Error message and password prompt
 
 <li>$:/palettes/ContrastLight</li>
 
+<li>$:/plugins/telmiger/details/details.css</li>
+
+<li>$:/plugins/telmiger/details/details.js</li>
+
 <li>$:/plugins/tiddlywiki/codemirror</li>
 
 <li>$:/plugins/tiddlywiki/github-fork-ribbon</li>
@@ -212,6 +216,8 @@ Error message and password prompt
 
 <li>$:/state/image-picker/system-1378041561</li>
 
+<li>$:/state/plugin-info--1893909122-$:/plugins/tiddlywiki/highlight---1375639774</li>
+
 <li>$:/state/plugin-info--906510658-$:/plugins/tiddlywiki/codemirror--1798174986</li>
 
 <li>$:/state/plugin-info-1856074772-$:/plugins/tiddlywiki/github-fork-ribbon</li>
@@ -232,6 +238,8 @@ Error message and password prompt
 
 <li>$:/state/tab--86143343</li>
 
+<li>$:/state/tab--868624678</li>
+
 <li>$:/state/tab--959111941</li>
 
 <li>$:/state/tab-1342078386</li>
@@ -251,6 +259,8 @@ Error message and password prompt
 <li>$:/state/toc/Contents-Program Execution-209360082</li>
 
 <li>$:/state/toc/Contents/Program Execution-Program Loading-209360082</li>
+
+<li>$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082</li>
 
 <li>$:/StoryList</li>
 
@@ -440,6 +450,8 @@ Error message and password prompt
 
 <li>defaultBackground</li>
 
+<li>Exploiting Windows Program Loading</li>
+
 <li>Introduction</li>
 
 <li>Linux Architecture</li>
@@ -482,7 +494,7 @@ Error message and password prompt
 <!--~~ Ordinary tiddlers ~~-->
 
 <div id="storeArea" style="display:none;">
-<div created="20170907100514312" list="" modified="20170909172645677" tags="Contents introduction intro" title="__Introduction__" type="text/vnd.tiddlywiki">
+<div created="20170907100514312" list="" modified="20171031154618506" tags="Contents introduction intro" title="__Introduction__" type="text/vnd.tiddlywiki">
 <pre>          
 &lt;div class=&quot;github-fork-ribbon-wrapper left&quot;&gt;&lt;div class=&quot;github-fork-ribbon&quot;&gt;&lt;a href=&quot;https://github.com/shubham0d/WindowsVsLinuxSecurity&quot;&gt;Fork us on ~GitHub&lt;/a&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -8747,7 +8759,7 @@ These conditions and events make us curious to work on analysing and comparing t
 <div status="complete" title="$:/Import">
 <pre>The following tiddlers were imported:
 
-# [[Windows_2000_architecture.svg]]</pre>
+# [[$:/plugins/telmiger/details/details.css]]</pre>
 </div>
 <div title="$:/isEncrypted">
 <pre>no</pre>
@@ -8755,14 +8767,14 @@ These conditions and events make us curious to work on analysing and comparing t
 <div created="20170907103029368" modified="20170909170911518" title="$:/palette">
 <pre>$:/palettes/ContrastLight</pre>
 </div>
-<div created="20170908171608964" description="High contrast and unambiguous (light version)" modified="20170909172509097" name="Contrast (Light)" tags="$:/tags/Palette" title="$:/palettes/ContrastLight" type="application/x-tiddler-dictionary">
+<div created="20170908171608964" description="High contrast and unambiguous (light version)" modified="20171102100731008" name="Contrast (Light)" tags="$:/tags/Palette" title="$:/palettes/ContrastLight" type="application/x-tiddler-dictionary">
 <pre>alert-background: #000000
 alert-border: &lt;&lt;colour background&gt;&gt;
 alert-highlight: &lt;&lt;colour foreground&gt;&gt;
 alert-muted-foreground: #800
 background: #F1F1F1
-blockquote-bar: &lt;&lt;colour muted-foreground&gt;&gt;
-button-background: &lt;&lt;colour background&gt;&gt;
+blockquote-bar: #201414
+button-background: #e9dbdb
 button-foreground: &lt;&lt;colour foreground&gt;&gt;
 button-border: #b7e6da
 code-background: &lt;&lt;colour background&gt;&gt;
@@ -8773,10 +8785,10 @@ download-background: #080
 download-foreground: &lt;&lt;colour background&gt;&gt;
 dragger-background: &lt;&lt;colour foreground&gt;&gt;
 dragger-foreground: &lt;&lt;colour background&gt;&gt;
-dropdown-background: &lt;&lt;colour background&gt;&gt;
+dropdown-background: #0f0808
 dropdown-border: &lt;&lt;colour muted-foreground&gt;&gt;
 dropdown-tab-background-selected: &lt;&lt;colour foreground&gt;&gt;
-dropdown-tab-background: &lt;&lt;colour foreground&gt;&gt;
+dropdown-tab-background: #e0a5a5
 dropzone-background: rgba(0,200,0,0.7)
 external-link-background-hover: inherit
 external-link-background-visited: inherit
@@ -8785,7 +8797,7 @@ external-link-foreground-hover: inherit
 external-link-foreground-visited: #00a
 external-link-foreground: #00e
 foreground: #060606
-message-background: #0a1817
+message-background: #101e1d
 message-border: &lt;&lt;colour background&gt;&gt;
 message-foreground: &lt;&lt;colour background&gt;&gt;
 modal-backdrop: &lt;&lt;colour foreground&gt;&gt;
@@ -8819,7 +8831,7 @@ sidebar-tiddler-link-foreground-hover: &lt;&lt;colour foreground&gt;&gt;
 sidebar-tiddler-link-foreground: #153505
 site-title-foreground: &lt;&lt;colour tiddler-title-foreground&gt;&gt;
 static-alert-foreground: #aaaaaa
-tab-background-selected: &lt;&lt;colour background&gt;&gt;
+tab-background-selected: #181414
 tab-background: #472546
 tab-border-selected: &lt;&lt;colour foreground&gt;&gt;
 tab-border: &lt;&lt;colour foreground&gt;&gt;
@@ -8859,6 +8871,299 @@ toolbar-cancel-button:
 toolbar-done-button: 
 untagged-background: &lt;&lt;colour foreground&gt;&gt;
 very-muted-foreground: #888888</pre>
+</div>
+<div created="20170122140815442" creator="Thomas Elmiger" modified="20170618122301405" modifier="Thomas Elmiger" tags="$:/tags/Stylesheet" title="$:/plugins/telmiger/details/details.css">
+<pre>/* details and summary */
+
+details {
+   background-color: &lt;&lt;colour tiddler-info-tab-background&gt;&gt;;
+   transition: height 1s ease;
+}
+
+details summary {
+   display: list-item;
+   padding: 0.2em 0.5em 0.2em 0.66em;
+   padding-left: 1.76em;  /* adjust for indentation */
+   text-indent: -1.1em;
+   cursor: pointer;
+   background-color: &lt;&lt;colour dropdown-tab-background&gt;&gt;;
+}
+
+details.notification summary {
+    background-color: &lt;&lt;colour notification-background&gt;&gt;;
+}
+details.warning summary {
+    background-color: #ffe4df;
+}
+details.success summary {
+    background-color: #bfffe6;
+}
+
+details span.details-content {
+   padding: 0 0.75em 0.1em 0.8em;
+   display: block;
+}
+
+details:not([open]) { 
+   border-bottom: 1px solid lightgray;
+   cursor: pointer;
+}
+
+details[open] { 
+   border-bottom: 1px solid gray;
+}</pre>
+</div>
+<div created="20170124173619910" creator="Thomas Elmiger" modified="20170618122143103" modifier="Thomas Elmiger" module-type="widget" tags="Plugins" title="$:/plugins/telmiger/details/details.js" type="application/javascript">
+<pre>/*\
+title: $:/plugins/telmiger/details/details.js
+type: application/javascript
+module-type: widget
+
+Details widget v 0.6
+
+Will output an HTML 5 &lt;details&gt; section including a &lt;summary&gt;
+
+```
+	&lt;details&gt;
+		&lt;summary&gt;This sums it up&lt;/summary&gt; 
+		&lt;span class=&quot;details-content&quot;&gt;All the details follow here.&lt;/span&gt;
+	&lt;/details&gt;
+```
+
+|Parameter |Description |h
+|summary |Optional text to display as summary. Wins over field (see below). |
+|open |Optional initial state, set to &quot;open&quot; to show details on load. Defaults to &quot;&quot;. |
+|state |An optional TextReference containing the state. Wins over open. |
+|field |Optionally, the summary is taken from the field with this name in a given tiddler. Defaults to &quot;title&quot;. |
+|tiddler |Optional title of a tiddler to watch, connected to field. Defaults to current tiddler. |
+|class |Optional CSS classes to be assigned to the details tag. |
+
+
+\*/
+(function(){
+
+/*jslint node: true, browser: true */
+/*global $tw: false */
+&quot;use strict&quot;;
+
+var Widget = require(&quot;$:/core/modules/widgets/widget.js&quot;).widget;
+
+var DetailsWidget = function(parseTreeNode,options) {
+	this.initialise(parseTreeNode,options);
+};
+
+/*
+Inherit from the base widget class
+*/
+DetailsWidget.prototype = new Widget();
+
+/*
+Render this widget into the DOM
+*/
+DetailsWidget.prototype.render = function(parent,nextSibling) {
+	// Save the parent dom node
+	this.parentDomNode = parent;
+	// Compute our attributes
+	this.computeAttributes();
+	// Execute our logic
+	this.execute();
+	// Create our elements
+	this.detailsDomNode = this.document.createElement(&quot;details&quot;);
+	this.detailsDomNode.setAttribute(&quot;class&quot;,this.detailsClass);
+	if(this.detailsOpen == &quot;open&quot;) {
+		this.detailsDomNode.setAttribute(&quot;open&quot;,&quot;open&quot;);
+	}
+	if(this.detailsSummary !== &quot;&quot;) {
+		this.summaryDomNode = this.document.createElement(&quot;summary&quot;);
+		this.detailsDomNode.appendChild(this.summaryDomNode);
+		this.summaryDomNode.appendChild(this.document.createTextNode(this.detailsSummary));
+	}
+	this.spanDomNode = this.document.createElement(&quot;span&quot;);
+        this.spanDomNode.className = &quot;details-content&quot;;
+	this.detailsDomNode.appendChild(this.spanDomNode);
+// register an event listener?
+/* Maybe this can be reactivated later, see below. Remember to change back inverted toggle logic too.
+	if(this.detailsStateTitle) {
+		$tw.utils.addEventListeners(this.detailsDomNode,[
+			{name: &quot;toggle&quot;, handlerObject: this, handlerMethod: &quot;handleToggleEvent&quot;},
+		]);
+	}
+*/
+// As iOS mobile browsers lack support of toggle events on details 
+// we emulate the toggle event using click
+	if(this.detailsStateTitle &amp;&amp; this.summaryDomNode) {
+		$tw.utils.addEventListeners(this.summaryDomNode,[
+			{name: &quot;click&quot;, handlerObject: this, handlerMethod: &quot;handleToggleEvent&quot;},
+		]);
+	} else {
+		if(this.detailsStateTitle) {
+			$tw.utils.addEventListeners(this.detailsDomNode,[
+				{name: &quot;click&quot;, handlerObject: this, handlerMethod: &quot;handleToggleEvent&quot;},
+			]);
+		}
+	}
+	// Insert the details into the DOM and render any children
+	this.parentDomNode.insertBefore(this.detailsDomNode,nextSibling);
+	this.renderChildren(this.spanDomNode,null);
+	this.domNodes.push(this.detailsDomNode);
+};
+
+/*
+Retrieve the value of the summary
+*/
+DetailsWidget.prototype.getSummary = function() {
+	var value = &quot;&quot;;
+	if(this.summaryTitle === &quot;&quot; &amp;&amp; this.summaryField === &quot;&quot; &amp;&amp; 
+	   this.detailsSummary === &quot;&quot;) {
+		value = &quot;&quot;;
+	} else {
+		var tiddler = this.wiki.getTiddler(this.summaryTitle) || this.wiki.getTiddler(this.getVariable(&quot;currentTiddler&quot;));
+		if(this.summaryField !== &quot;&quot;) {
+			if(this.summaryField === &quot;text&quot;) {
+            			// Calling getTiddlerText() triggers lazy loading of skinny tiddlers
+				value = this.wiki.getTiddlerText(this.summaryTitle);
+			} else {
+				 if(this.summaryField === &quot;title&quot;) {
+					value = this.summaryTitle;
+				} else {
+					value = tiddler.fields[this.summaryField];
+				}
+			}
+		} else {
+		    // no field specified, use title
+			value = tiddler.fields[&quot;title&quot;];
+		}
+	}
+    	return value;
+};
+
+/*
+Retrieve the value of the state text reference
+*/
+DetailsWidget.prototype.getStateFromReference = function() {
+    var state = this.detailsStateTitle ? this.wiki.getTextReference(this.detailsStateTitle,&quot;&quot;,this.getVariable(&quot;currentTiddler&quot;)) : &quot;&quot;;
+    return state;
+};
+
+/*
+Check all open signals, state fields/tiddlers get priority
+*/
+DetailsWidget.prototype.getOpenState = function() {
+	var result = &quot;&quot;;
+	if((this.detailsOpenDefault !== &quot;&quot; &amp;&amp; this.detailsOpenDefault !== &quot;no&quot;) 
+	    || this.detailsState === &quot;open&quot;) {
+		result = &quot;open&quot;;
+	 } 
+	if(this.detailsStateTitle !==&quot;&quot; &amp;&amp; this.detailsState !== &quot;open&quot;) {
+		result = &quot;&quot;;
+	}
+	return result;
+}
+
+/*
+Update the state text reference after click event
+*/
+DetailsWidget.prototype.updateState = function(openState) {
+	var fieldValue = &quot;false&quot;;
+	var currentTiddler = this.getVariable(&quot;currentTiddler&quot;);
+    // get the title for the (existing/new) tiddler
+	var tr = $tw.utils.parseTextReference(this.detailsStateTitle);
+	var tidTitle = tr.title || currentTiddler;
+    // is it an existing state tiddler?
+	var isStateTiddler = (tr.title === this.detailsStateTitle);
+	var hasStateTiddler = this.wiki.tiddlerExists(tr.title);
+	var currentStateTiddler = (tr.title === currentTiddler);
+	if(isStateTiddler || hasStateTiddler || (currentStateTiddler &amp;&amp; tr.field !== &quot;text&quot;)) { 
+		// Set the state field (but never overwrite the current tiddler’s text field
+		this.wiki.setText(tidTitle,tr.field,tr.index,openState);
+     // DELETE log when finished
+     console.log (&quot;field-update done: &quot; + openState);
+	} else {
+	    	// Set or create the tiddler if specified (but do not overwrite current tiddler by accident)
+		if(!hasStateTiddler &amp;&amp; tidTitle !== currentTiddler) {
+			this.wiki.addTiddler(new $tw.Tiddler(
+				this.wiki.getCreationFields(),
+				this.wiki.getModificationFields(),
+				{
+					title: tidTitle,
+					tags: []
+				}
+			));
+			this.wiki.setText(tidTitle,tr.field,tr.index,openState);
+     // DELETE log when finished
+	 console.log (&quot;tiddler-update done: &quot; + openState);
+		} else {
+			// DELETE when finished
+			console.log (&quot;Something went wrong in updateState&quot;);
+		}
+	}
+};
+
+/*
+Set openState according to click
+*/
+DetailsWidget.prototype.handleToggleEvent = function(event) {
+//     console.log (&quot;event registered&quot;);
+/* Maybe normal logic can be reactivated later when toggle is supported, see section rendering above
+	var state = this.detailsDomNode.open ? &quot;open&quot; : &quot;&quot;;
+*/
+	var state = this.detailsDomNode.open ? &quot;&quot; : &quot;open&quot;;
+	// update only, if the node has a new state
+	if(state !== this.detailsState) {
+		this.updateState(state);
+	}
+};
+
+/*
+Compute the internal state of the widget
+*/
+DetailsWidget.prototype.execute = function() {
+	// Get the parameters from the attributes 
+	this.summaryTitle = this.getAttribute(&quot;tiddler&quot;,&quot;&quot;);
+	this.summaryField = this.getAttribute(&quot;field&quot;,&quot;&quot;);
+	this.detailsSummary = this.getAttribute(&quot;summary&quot;,&quot;&quot;);
+	if(this.detailsSummary === &quot;&quot;) {
+		this.detailsSummary = this.getSummary();
+	}
+	this.detailsStateTitle = this.getAttribute(&quot;state&quot;,&quot;&quot;);
+	this.detailsState = this.getStateFromReference();
+	this.detailsOpenDefault = this.getAttribute(&quot;open&quot;,&quot;&quot;);
+	this.detailsOpen = this.getOpenState();
+	this.detailsClass = this.getAttribute(&quot;class&quot;,&quot;&quot;);
+	if(this.detailsClass !== &quot;&quot;) {
+		this.detailsClass += &quot; &quot;;
+	}
+	this.detailsClass += &quot;tc-details&quot;;
+	// Construct the child widgets
+	this.makeChildWidgets();
+};
+
+/*
+Selectively refreshes the widget if needed. Returns true if the widget or any of its children needed re-rendering
+*/
+DetailsWidget.prototype.refresh = function(changedTiddlers) {
+	var changedAttributes = this.computeAttributes();
+	if(changedAttributes.tiddler || changedAttributes.field || changedAttributes.summary || changedAttributes.state || changedAttributes.open || changedAttributes[&quot;class&quot;]) {
+    // paused:  || changedTiddlers[this.summaryTitle]
+		this.refreshSelf();
+             console.log (&quot;– self refresh done&quot;);
+		return true;
+	} else {
+		var refreshed = false;
+		var testState = this.getStateFromReference();
+		if(testState !== this.detailsState) {
+			// state change
+			this.refreshSelf();
+			refreshed = true;
+           console.log (&quot;– ref refresh done&quot;);
+		} 
+		return this.refreshChildren(changedTiddlers) || refreshed;
+	}
+};
+
+exports.details = DetailsWidget;
+
+})();</pre>
 </div>
 <div author="JeremyRuston" dependents="" description="CodeMirror: text editor" list="readme usage" plugin-type="plugin" title="$:/plugins/tiddlywiki/codemirror" type="application/json" version="5.1.14">
 <pre>{
@@ -9203,6 +9508,9 @@ very-muted-foreground: #888888</pre>
 <div created="20170907115714988" modified="20170908160717554" title="$:/state/image-picker/system-1378041561">
 <pre>hide</pre>
 </div>
+<div created="20171102100123204" modified="20171102100128886" title="$:/state/plugin-info--1893909122-$:/plugins/tiddlywiki/highlight---1375639774">
+<pre>readme</pre>
+</div>
 <div created="20170908182014700" modified="20170908182014700" title="$:/state/plugin-info--906510658-$:/plugins/tiddlywiki/codemirror--1798174986">
 <pre>usage</pre>
 </div>
@@ -9215,7 +9523,7 @@ very-muted-foreground: #888888</pre>
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20171030042952817" title="$:/state/showeditpreview">
+<div created="20170907105631882" modified="20171102101102602" title="$:/state/showeditpreview">
 <pre>yes</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
@@ -9233,20 +9541,23 @@ very-muted-foreground: #888888</pre>
 <div created="20170908174646366" modified="20170908181806909" title="$:/state/tab--86143343">
 <pre>$:/core/ui/ControlPanel/Plugins/Installed/Plugins</pre>
 </div>
+<div created="20171102100339377" modified="20171102100345681" title="$:/state/tab--868624678">
+<pre>$:/core/ui/MoreSideBar/Plugins/Plugins</pre>
+</div>
 <div created="20170908175811505" modified="20170908175825334" title="$:/state/tab--959111941">
 <pre>$:/core/ui/ControlPanel/Parsing</pre>
 </div>
 <div created="20170908180003913" modified="20170908181250207" title="$:/state/tab-1342078386">
 <pre>$:/core/ui/ControlPanel/Plugins/Add/Languages</pre>
 </div>
-<div created="20170907103450202" modified="20170911084528587" title="$:/state/tab-1749438307">
-<pre>$:/core/ui/ControlPanel/KeyboardShortcuts</pre>
+<div created="20170907103450202" modified="20171102095739923" title="$:/state/tab-1749438307">
+<pre>$:/core/ui/ControlPanel/Appearance</pre>
 </div>
-<div created="20170907103514356" modified="20170910182052592" title="$:/state/tab/moresidebar-401116514">
-<pre>$:/core/ui/MoreSideBar/Tags</pre>
+<div created="20170907103514356" modified="20171102100337000" title="$:/state/tab/moresidebar-401116514">
+<pre>$:/core/ui/MoreSideBar/Plugins</pre>
 </div>
-<div created="20170907101759074" modified="20171030043509552" title="$:/state/tab/sidebar--1835078512">
-<pre>Contents</pre>
+<div created="20170907101759074" modified="20171102100445087" title="$:/state/tab/sidebar--1835078512">
+<pre>$:/core/ui/SideBar/More</pre>
 </div>
 <div created="20170908055139057" modified="20171029152632605" title="$:/state/toc/Contents-Architecture-209360082">
 <pre>open</pre>
@@ -9263,7 +9574,10 @@ very-muted-foreground: #888888</pre>
 <div created="20171029102407659" modified="20171029102407659" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
 <pre>open</pre>
 </div>
-<div list="[[Windows Loader]] __Introduction__" title="$:/StoryList">
+<div created="20171031153920976" modified="20171031153920976" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
+<pre>open</pre>
+</div>
+<div list="[[Exploiting Windows Program Loading]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -9999,6 +10313,71 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 <div _canonical_uri="images/62.jpg" created="20170910090008496" modified="20170910090041353" tags="" title="defaultBackground" type="image/jpeg">
 <pre></pre>
 </div>
+<div accordion1="" accordion2="" accordion3="open" accordion4="open" created="20171031153728026" modified="20171102101322981" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
+<pre>! Issues with CreateProcess
+
+&lt;$button&gt;
+&lt;$action-setfield accordion1=&quot;open&quot; accordion2=&quot;open&quot;/&gt;
+Open all
+&lt;/$button&gt; 
+&lt;$button&gt;
+&lt;$action-setfield accordion1=&quot;&quot; accordion2=&quot;&quot;/&gt;
+Close all
+&lt;/$button&gt;
+
+&lt;$details summary=&quot;How CreateProcess Works&quot; state=&quot;!!accordion1&quot;&gt;
+
+Creates a new process and its primary thread. The new process runs in the security context of the calling process.
+
+Syntax:-
+
+```cpp
+
+BOOL WINAPI CreateProcess(
+  _In_opt_    LPCTSTR               lpApplicationName,
+  _Inout_opt_ LPTSTR                lpCommandLine,
+  _In_opt_    LPSECURITY_ATTRIBUTES lpProcessAttributes,
+  _In_opt_    LPSECURITY_ATTRIBUTES lpThreadAttributes,
+  _In_        BOOL                  bInheritHandles,
+  _In_        DWORD                 dwCreationFlags,
+  _In_opt_    LPVOID                lpEnvironment,
+  _In_opt_    LPCTSTR               lpCurrentDirectory,
+  _In_        LPSTARTUPINFO         lpStartupInfo,
+  _Out_       LPPROCESS_INFORMATION lpProcessInformation
+)
+```
+
+&lt;/$details&gt;
+&lt;$details summary=&quot;Search path injection&quot; state=&quot;!!accordion2&quot;&gt;
+
+!! Search path injection
+The preferred method of using CreateProcess is to set lpApplicationName to the full path of the application to run and fill lpCommandLine with any optional arguments to the application. However, this method is not strictly enforced allowing developers to set any one of the two arguments to NULL.
+In the first case, a developer may set lpApplicationName to NULL and set lpCommandLine to the string used to launch the application from the command prompt. In this case, if the absolute path to the application is not specified, the system attempts to look for it in a few known locations. This gives rise to a problem known as Search Path Injection. The order in which the system looks into the known folders is:
+
+* The current directory of the application
+* The directory of the parent process
+* The Windows System directory
+* The Windows directory
+* All the other directories on the search path
+
+For example, if lpCommandLine is set to:
+         //program -a -b//
+
+The system tries to locate the executable &quot;program&quot; in the above mentioned folders in that order. If the attacker manages to place another executable named &quot;program&quot; somewhere higher in the search path, that executable will be launched. The mitigation for this attack is to always use the full canonical (unambiguous) path to the application no matter whether it is being used as lpApplicationName or included in lpCommandLine.
+Using the full path may however, lead to a second type of problem. This problem is caused by the way the system parses lpCommandLine string when lpApplicationName is NULL. The first white space–delimited token in the lpCommandLine string is taken to be the module name. If the token does not contain an extension, a &quot;.exe&quot; is appended to it. For example, consider the string &quot;c:\program files\sub dir\program name&quot;. This string can be interpreted in a number of ways. The system tries to interpret the possibilities in the following order:
+
+&lt;&lt;&lt;
+c:\program.exe files\sub dir\program name&lt;br/&gt;
+c:\program files\sub.exe dir\program name&lt;br/&gt;
+c:\program files\sub dir\program.exe name&lt;br/&gt;
+c:\program files\sub dir\program name.exe&lt;br/&gt;
+&lt;&lt;&lt;
+
+This results in c:\program.exe being called prior to program name.exe and allows automatic startup of a potentially rogue application.
+If the vulnerable application tries to launch an application located in some folder inside &quot;C:\Program Files&quot;, all the hacker has to do is to name his executable program.exe and place it in &quot;C:\&quot;.&lt;br/&gt;
+The mitigation for this problem is to use quoted strings to indicate where the file name ends and the arguments begin; otherwise, the file name is ambiguous. Hence in the above example we would pass the literal string &quot;\&quot;C:\\program files\\sub dir\\program name\&quot;&quot; as lpCommandLine. Note however, the above mentioned problem does not arise if lpApplicationName is non-NULL.
+&lt;/$details&gt;</pre>
+</div>
 <div created="20170908212738743" modified="20170908212738743" title="Introduction">
 <pre></pre>
 </div>
@@ -10059,8 +10438,8 @@ activity. Additionally, all the routing and address resolution issues are implem
 While much of Linux is independent of the architecture on which it runs, there are elements that must consider the architecture for normal operation and for efficiency. The ./linux/arch subdirectory defines the architecture-dependent portion of the kernel source contained in a number of subdirectories that are specific to the architecture (collectively forming the BSP). For a typical desktop, the i386 directory is used. Each architecture subdirectory contains a number of other subdirectories that focus on a particular aspect of the kernel, such as boot, kernel, memory management, and others. You can find the architecture-dependent code in ./linux/arch.
 </pre>
 </div>
-<div created="20171029102420210" modified="20171029102435012" tags="[[Program Loading]]" title="Linux Loader">
-<pre></pre>
+<div created="20171029102420210" modified="20171030043914949" tags="[[Program Loading]]" title="Linux Loader">
+<pre>Lets start with</pre>
 </div>
 <div created="20171028180138383" modified="20171028180154211" tags="[[Login Security]]" title="Linux Login">
 <pre></pre>
@@ -10131,7 +10510,7 @@ All contain available here is just for education purpose only(you already know t
 ---
 &lt;center&gt;[[Next|Contribute/Edit or Save offline content?]]</pre>
 </div>
-<div created="20171029102255634" modified="20171030043247353" tags="[[Program Loading]]" title="Windows Loader">
+<div created="20171029102255634" modified="20171031154934075" tags="[[Program Loading]]" title="Windows Loader">
 <pre>A Win32 process is created when an application calls one of the process creation functions, such as CreateProcess, CreateProcessAsUser, or CreateProcessWithLogonW. Creating a Win32 process consists of several stages carried out in three parts of the operating system: the Win32 client-side library Kernel32.dll, the Windows 2000 executive, and the Win32 subsystem process (Csrss). Because of the multiple environment subsystem architecture of Windows 2000, creating a Windows 2000 executive process object (which other subsystems can use) is separated from the work involved in creating a Win32 process. So, although the following description of the flow of the Win32 CreateProcess function is complicated, keep in mind that part of the work is specific to the semantics added by the Win32 subsystem as opposed to the core work needed to create a Windows 2000 executive process object.
 
 The following list summarizes the main stages of creating a process with the Win32 CreateProcess function.
@@ -10146,9 +10525,10 @@ The following list summarizes the main stages of creating a process with the Win
 * Start execution of the initial thread (unless the CREATE_SUSPENDED flag was specified).
  
 * In the context of the new process and thread, complete the initialization of the address space (such as load required DLLs) and begin execution of the program.
-[[Detailed procedure here|https://www.microsoft.com/mspress/books/sampchap/4354a.aspx]]&lt;br/&gt;
+&lt;center&gt;[img[proccessStage|images/beforeProcess.jpg]]&lt;/center&gt;&lt;br/&gt;
+[[Detailed procedure here|https://www.microsoft.com/mspress/books/sampchap/4354a.aspx]]
 
-!! Performing Process Initialization in the Context of the New Process
+! Performing Process Initialization in the Context of the New Process&lt;br/&gt;
 
 After CreateProcess done its work a new thread is created. KiInitializeContextThread, which is called by KeInitializeThread, builds the initial context of the thread and the thread's kernel stack. Lowers the IRQL level from DPC/dispatch level to APC (asynchronous procedure call) level.The KiThreadStartup routine performs the following steps:
 
@@ -10160,7 +10540,15 @@ After CreateProcess done its work a new thread is created. KiInitializeContextTh
 
 * If the process being created is a debuggee, all threads in the process are suspended. (Threads might have been created during step 3.) A create process message is then sent to the process's debug port (the Win32 subsystem function port because this is a Win32 process) so that the subsystem can deliver the process startup debug event (CREATE_PROCESS_DEBUG_INFO) to the appropriate debugger process. KiThreadStartup then waits for the Win32 subsystem to get the reply from the debugger (via the ContinueDebugEvent function). When the Win32 subsystem replies, all the threads are resumed.
 
-Finally, the image begins execution in user mode. This is done by creating a trap frame that specifies the previous mode as user and the address to return to as the main entry point of the image. Thus, when the trap that caused the thread to start execution in kernel mode is dismissed, and the control is transfer to CreateThread API again (and even the NtCreateThread system service that is used to implement the Win32 CreateThread) which provide the illusion that a thread begins its execution at a specified start routine (or instruction pointer, in the case of NtCreateThread)</pre>
+Finally, the image begins execution in user mode. This is done by creating a trap frame that specifies the previous mode as user and the address to return to as the main entry point of the image. Thus, when the trap that caused the thread to start execution in kernel mode is dismissed, and the control is transfer to CreateThread API again (and even the NtCreateThread system service that is used to implement the Win32 CreateThread) which provide the illusion that a thread begins its execution at a specified start routine (or instruction pointer, in the case of NtCreateThread)
+
+&lt;$list filter=&quot;[!has[draft.of]tag[Windows Loader]sort[created]]&quot;&gt;
+
+&lt;$link to={{!!title}}&gt;
+&lt;$view field=&quot;title&quot;/&gt;
+&lt;/$link&gt;
+&lt;/$list&gt;
+</pre>
 </div>
 <div created="20171028175738057" modified="20171028180102880" tags="[[Login Security]]" title="Windows Login">
 <pre></pre>
