@@ -9542,8 +9542,8 @@ exports.details = DetailsWidget;
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20171103122421143" title="$:/state/showeditpreview">
-<pre>no</pre>
+<div created="20170907105631882" modified="20171103145342658" title="$:/state/showeditpreview">
+<pre>yes</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
 <pre>yes</pre>
@@ -9599,13 +9599,13 @@ exports.details = DetailsWidget;
 <div created="20171029102407659" modified="20171029102407659" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
 <pre>open</pre>
 </div>
-<div created="20171031153920976" modified="20171103122837482" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
-<pre>close</pre>
+<div created="20171031153920976" modified="20171103142854327" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
+<pre>open</pre>
 </div>
-<div created="20171103122553855" modified="20171103122836276" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
-<pre>close</pre>
+<div created="20171103122553855" modified="20171103142858039" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
+<pre>open</pre>
 </div>
-<div list="[[Exploiting Windows Program Loading]] __Introduction__" title="$:/StoryList">
+<div list="[[Exploiting Windows Program Loading]] [[Access token stealing on Windows]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10252,8 +10252,16 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20170907103121402" modified="20170907103121402" title="$:/view">
 <pre>pop</pre>
 </div>
-<div created="20171103122324217" modified="20171103122410135" tags="[[Exploiting Windows Program Loading]]" title="Access token stealing on Windows">
-<pre></pre>
+<div created="20171103122324217" modified="20171103145828200" tags="[[Exploiting Windows Program Loading]]" title="Access token stealing on Windows">
+<pre>Work in progress!!
+link 1:
+https://www.scribd.com/document/21143202/Access-Token-Stealing-on-Windows
+link 2:
+https://www.scribd.com/document/113582171/Design-and-Implementation-of-Token-Stealing-Kernel-Shellcode-for-Windows-8
+link 3:
+https://www.lastline.com/labsblog/catching-the-hacking-teams-system-access-token-thief-red-handed/
+link 4:
+https://www.whitehatters.academy/intro-to-windows-kernel-exploitation-3-my-first-driver-exploit/</pre>
 </div>
 <div created="20170911084208364" modified="20171028175359950" tags="Contents" title="Architecture">
 <pre>Lets look at the architecture difference between the two of the operating system.
@@ -10347,7 +10355,7 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 <div _canonical_uri="images/62.jpg" created="20170910090008496" modified="20170910090041353" tags="" title="defaultBackground" type="image/jpeg">
 <pre></pre>
 </div>
-<div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171103122851557" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
+<div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171103145348202" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
 <pre>! Issues with CreateProcess
 
 &lt;$button&gt;
@@ -10380,6 +10388,7 @@ BOOL WINAPI CreateProcess(
   _Out_       LPPROCESS_INFORMATION lpProcessInformation
 )
 ```
+
 !! Search path injection
 The preferred method of using CreateProcess is to set lpApplicationName to the full path of the application to run and fill lpCommandLine with any optional arguments to the application. However, this method is not strictly enforced allowing developers to set any one of the two arguments to NULL.
 In the first case, a developer may set lpApplicationName to NULL and set lpCommandLine to the string used to launch the application from the command prompt. In this case, if the absolute path to the application is not specified, the system attempts to look for it in a few known locations. This gives rise to a problem known as Search Path Injection. The order in which the system looks into the known folders is:
@@ -10405,29 +10414,47 @@ c:\program files\sub dir\program name.exe&lt;br/&gt;
 
 This results in c:\program.exe being called prior to program name.exe and allows automatic startup of a potentially rogue application.
 If the vulnerable application tries to launch an application located in some folder inside &quot;C:\Program Files&quot;, all the hacker has to do is to name his executable program.exe and place it in &quot;C:\&quot;.&lt;br/&gt;
-The mitigation for this problem is to use quoted strings to indicate where the file name ends and the arguments begin; otherwise, the file name is ambiguous. Hence in the above example we would pass the literal string &quot;\&quot;C:\\program files\\sub dir\\program name\&quot;&quot; as lpCommandLine. Note however, the above mentioned problem does not arise if lpApplicationName is non-NULL.
+The mitigation for this problem is to use quoted strings to indicate where the file name ends and the arguments begin; otherwise, the file name is ambiguous. Hence in the above example we would pass the literal string &quot;C:\\program files\\sub dir\\program name\&quot; as lpCommandLine. Note however, the above mentioned problem does not arise if lpApplicationName is non-NULL.
+
 &lt;/$details&gt;
-&lt;$details summary=&quot;Token Stealing using EPROCESS&quot; state=&quot;!!accordion2&quot;&gt;
+
+&lt;$details summary=&quot;Token Stealing using EPROCESS&quot;  state=&quot;!!accordion2&quot;&gt;
+
 The first stage in CreateProcess is to find the appropriate Win32 image that will run the executable file specified by the caller and to create a section object to later map it into the address space of the new process. Next it creates a Windows 2000 executive process object to run the image by calling the internal system function NtCreateProcess.Its work including setting up and initialize the EPROCESS block.
 
 Windows represents each process in memory by EPROCESS block. It is a block that contains pointers to both next and previous EPROCESS blocks.
 
 &lt;center&gt;[img[compare|images/eprocess2.png]]&lt;/center&gt;
 To perform token stealing is really simple in old windows. It is about to retrieve the KPCR base directly from 0xffdff000, getting current thread,then the current process. After that, walk through the link list of EPROCESS object to find out the process with pid as 4, which is the system process, then duplicate its token, and finally overwrite the token of current process. This will make the process to elevate to SYSTEM privileges.
-For recent windows system finding EPROCESS structure need some work. In a first step, the exploit code has to find a reference to the EPROCESS structure of its own process. To do this, the code calls NtQuerySystemInformation (passing SystemHandleInformation, 0x10), which returns information about all handles acquired by any process. The information is returned using the SYSTEM_HANDLE_INFORMATION structure.
-&lt;br/&gt;
-&lt;br/&gt;
-typedef struct _SYSTEM_HANDLE_INFORMATION&lt;br/&gt;
-{&lt;br/&gt;
-   ULONG ProcessId;&lt;br/&gt;
-   BYTE ObjectTypeNumber;&lt;br/&gt;
-   BYTE Flags;&lt;br/&gt;
-   USHORT Handle;&lt;br/&gt;
-   PVOID Object;&lt;br/&gt;
-   ACCESS_MASK GrantedAccess;&lt;br/&gt;
-} SYSTEM_HANDLE_INFORMATION, &lt;br/&gt;*PSYSTEM_HANDLE_INFORMATION;&lt;br/&gt;
+The general algorithm for the token stealing shellcode can be: 
 
-&lt;br/&gt;
+* Save the drivers registers so we can restore them later and avoid crashing it.
+* Find the _KPRCB struct by looking in the fs segment register
+* Find the _KTHREAD structure corresponding to the current thread by indexing into _KPRCB.
+* Find the _EPROCESS structure corresponding to the current process by indexing into _KTHREAD.
+* Look for the _EPROCESS structure corresponding to the process with PID=4 (UniqueProcessId = 4) by walking the doubly linked list of all _EPROCESS structures that the _EPROCRESS structure contains a references to, this is the &quot;System&quot; process that always has SID ( Security Identifier) = NT AUTHORITY\SYSTEM SID.
+* Retrieve the address of the Token of that process.
+* Look for the _EPROCESS structure corresponding to the process we want to escalate (our process).
+* Replace the Token of the target process with the Token of the &quot;System&quot; process.
+* Clean up our stack and reset our registers before returning.
+
+For recent windows system finding EPROCESS structure need some work. In a first step, the exploit code has to find a reference to the EPROCESS structure of its own process. To do this, the code calls NtQuerySystemInformation (passing SystemHandleInformation, 0x10), which returns information about all handles acquired by any process. The information is returned using the SYSTEM_HANDLE_INFORMATION structure.
+
+
+```cpp
+typedef struct _SYSTEM_HANDLE_INFORMATION&lt;
+{
+   ULONG ProcessId;
+   BYTE ObjectTypeNumber;
+   BYTE Flags;
+   USHORT Handle;
+   PVOID Object;
+   ACCESS_MASK GrantedAccess;
+} SYSTEM_HANDLE_INFORMATION, *PSYSTEM_HANDLE_INFORMATION;
+```
+
+
+
 which reveals a structure’s address in kernel memory through the Object member.&lt;br/&gt;
 To find the correct process handle, the code uses DuplicateHandle and then searches for the correct instance in the list of objects, obtaining the memory address of the EPROCESS object in kernel space.&lt;br/&gt;
 To successfully steal another process’ privileges, the exploit needs to modify a few member variables of its EPROCESS structure, such as the PID (EPROCESS::UniqueProcessId) and access token (EPROCESS::Token).
@@ -10436,7 +10463,15 @@ However, as mentioned above, the layout of the structure and thus the position o
 &lt;br/&gt;
 Once the memory layout (location of structures) as well as their format (offsets within the structures) are known, the exploit can elevate privileges of its own process. To do so, it traverses the ActiveProcessLinks, a doubly-linked list of EPROCESS structures of active processes, to find the System process entry (with PID 4).From there, the exploit duplicates the access token into its own structure, essentially gaining the same (system) privileges.
 &lt;br/&gt;
+
+---
 [[Detailed description with Eplotitation example on Windows 7 here|Access token stealing on Windows]]
+
+---
+&lt;br/&gt;
+
+
+
 &lt;/$details&gt;
 &lt;$details summary=&quot;new&quot; state=&quot;!!accordion3&quot;&gt;
 
