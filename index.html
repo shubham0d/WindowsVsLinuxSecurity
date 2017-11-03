@@ -134,6 +134,8 @@ Error message and password prompt
 
 <li>$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/new-journal</li>
 
+<li>$:/config/Plugins/Disabled/$:/plugins/tiddlywiki/codemirror</li>
+
 <li>$:/config/RelinkOnRename</li>
 
 <li>$:/config/TextEditor/EnableToolbar</li>
@@ -250,7 +252,11 @@ Error message and password prompt
 
 <li>$:/state/tab/sidebar--1835078512</li>
 
+<li>$:/state/toc/Contents-Architecture--428644737</li>
+
 <li>$:/state/toc/Contents-Architecture-209360082</li>
+
+<li>$:/state/toc/Contents-Before you Begin--428644737</li>
 
 <li>$:/state/toc/Contents-Before you Begin-209360082</li>
 
@@ -261,6 +267,8 @@ Error message and password prompt
 <li>$:/state/toc/Contents/Program Execution-Program Loading-209360082</li>
 
 <li>$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082</li>
+
+<li>$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082</li>
 
 <li>$:/StoryList</li>
 
@@ -396,6 +404,8 @@ Error message and password prompt
 
 <li>$:/temp/RemoteAssetInfo/http://tiddlywiki.com/library/v5.1.14/index.html/$:/themes/tiddlywiki/vanilla</li>
 
+<li>$:/temp/search</li>
+
 <li>$:/temp/ServerConnection/http://tiddlywiki.com/library/v5.1.14/index.html</li>
 
 <li>$:/theme</li>
@@ -433,6 +443,8 @@ Error message and password prompt
 <li>$:/themes/tiddlywiki/vanilla/settings/backgroundimageattachment</li>
 
 <li>$:/view</li>
+
+<li>Access token stealing on Windows</li>
 
 <li>Architecture</li>
 
@@ -494,7 +506,7 @@ Error message and password prompt
 <!--~~ Ordinary tiddlers ~~-->
 
 <div id="storeArea" style="display:none;">
-<div created="20170907100514312" list="" modified="20171031154618506" tags="Contents introduction intro" title="__Introduction__" type="text/vnd.tiddlywiki">
+<div created="20170907100514312" list="" modified="20171102110716335" tags="Contents introduction intro" title="__Introduction__" type="text/vnd.tiddlywiki">
 <pre>          
 &lt;div class=&quot;github-fork-ribbon-wrapper left&quot;&gt;&lt;div class=&quot;github-fork-ribbon&quot;&gt;&lt;a href=&quot;https://github.com/shubham0d/WindowsVsLinuxSecurity&quot;&gt;Fork us on ~GitHub&lt;/a&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -514,7 +526,11 @@ these large scale attacks are less possible will be executed by any hacker group
 These conditions and events make us curious to work on analysing and comparing these operating system and found which one is superior in which field.
 
 ---
-
+&lt;$details summary=&quot;Table Of Contents&quot; state=&quot;!!accordion1&quot;&gt;
+&lt;div class=&quot;tc-table-of-contents&quot;&gt;
+&lt;&lt;toc-selective-expandable 'Contents' sort[created]&gt;&gt;
+&lt;/div&gt;
+&lt;/$details&gt;
  &lt;center&gt; [[Next|Before you Begin]]&lt;/center&gt;
 
 
@@ -537,6 +553,9 @@ These conditions and events make us curious to work on analysing and comparing t
 </div>
 <div created="20170908042817014" modified="20170908042817014" title="$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/new-journal">
 <pre>show</pre>
+</div>
+<div created="20171103121502324" modified="20171103121747544" title="$:/config/Plugins/Disabled/$:/plugins/tiddlywiki/codemirror">
+<pre>no</pre>
 </div>
 <div created="20170908045843541" modified="20170910175359487" title="$:/config/RelinkOnRename">
 <pre>yes</pre>
@@ -9511,7 +9530,7 @@ exports.details = DetailsWidget;
 <div created="20171102100123204" modified="20171102100128886" title="$:/state/plugin-info--1893909122-$:/plugins/tiddlywiki/highlight---1375639774">
 <pre>readme</pre>
 </div>
-<div created="20170908182014700" modified="20170908182014700" title="$:/state/plugin-info--906510658-$:/plugins/tiddlywiki/codemirror--1798174986">
+<div created="20170908182014700" modified="20171103121752756" title="$:/state/plugin-info--906510658-$:/plugins/tiddlywiki/codemirror--1798174986">
 <pre>usage</pre>
 </div>
 <div created="20170908181443759" modified="20170908181445053" title="$:/state/plugin-info-1856074772-$:/plugins/tiddlywiki/github-fork-ribbon">
@@ -9523,8 +9542,8 @@ exports.details = DetailsWidget;
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20171102101102602" title="$:/state/showeditpreview">
-<pre>yes</pre>
+<div created="20170907105631882" modified="20171103122421143" title="$:/state/showeditpreview">
+<pre>no</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
 <pre>yes</pre>
@@ -9556,11 +9575,17 @@ exports.details = DetailsWidget;
 <div created="20170907103514356" modified="20171102100337000" title="$:/state/tab/moresidebar-401116514">
 <pre>$:/core/ui/MoreSideBar/Plugins</pre>
 </div>
-<div created="20170907101759074" modified="20171102100445087" title="$:/state/tab/sidebar--1835078512">
-<pre>$:/core/ui/SideBar/More</pre>
+<div created="20170907101759074" modified="20171103122234567" title="$:/state/tab/sidebar--1835078512">
+<pre>Contents</pre>
+</div>
+<div created="20171102110725248" modified="20171102110728210" title="$:/state/toc/Contents-Architecture--428644737">
+<pre>open</pre>
 </div>
 <div created="20170908055139057" modified="20171029152632605" title="$:/state/toc/Contents-Architecture-209360082">
 <pre>open</pre>
+</div>
+<div created="20171102110722423" modified="20171102110723913" title="$:/state/toc/Contents-Before you Begin--428644737">
+<pre>close</pre>
 </div>
 <div created="20170909154550348" modified="20170909191525591" title="$:/state/toc/Contents-Before you Begin-209360082">
 <pre>open</pre>
@@ -9574,8 +9599,11 @@ exports.details = DetailsWidget;
 <div created="20171029102407659" modified="20171029102407659" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
 <pre>open</pre>
 </div>
-<div created="20171031153920976" modified="20171031153920976" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
-<pre>open</pre>
+<div created="20171031153920976" modified="20171103122837482" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
+<pre>close</pre>
+</div>
+<div created="20171103122553855" modified="20171103122836276" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
+<pre>close</pre>
 </div>
 <div list="[[Exploiting Windows Program Loading]] __Introduction__" title="$:/StoryList">
 <pre></pre>
@@ -10061,6 +10089,9 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div author="JeremyRuston" core-version="&gt;=5.0.0" created="20170908180359416" dependents="" description="Basic theme" modified="20170908180359416" name="Vanilla" original-plugin-type="theme" original-tags="" original-title="$:/themes/tiddlywiki/vanilla" original-type="application/json" server-url="http://tiddlywiki.com/library/v5.1.14/index.html" tags="$:/tags/RemoteAssetInfo" title="$:/temp/RemoteAssetInfo/http://tiddlywiki.com/library/v5.1.14/index.html/$:/themes/tiddlywiki/vanilla" type="text/vnd.tiddlywiki" version="5.1.14">
 <pre></pre>
 </div>
+<div created="20171102110634534" modified="20171102123620844" title="$:/temp/search">
+<pre></pre>
+</div>
 <div created="20170908180359349" modified="20170908180359349" tags="$:/tags/ServerConnection" title="$:/temp/ServerConnection/http://tiddlywiki.com/library/v5.1.14/index.html" url="http://tiddlywiki.com/library/v5.1.14/index.html">
 <pre>loaded</pre>
 </div>
@@ -10221,6 +10252,9 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20170907103121402" modified="20170907103121402" title="$:/view">
 <pre>pop</pre>
 </div>
+<div created="20171103122324217" modified="20171103122410135" tags="[[Exploiting Windows Program Loading]]" title="Access token stealing on Windows">
+<pre></pre>
+</div>
 <div created="20170911084208364" modified="20171028175359950" tags="Contents" title="Architecture">
 <pre>Lets look at the architecture difference between the two of the operating system.
 
@@ -10313,19 +10347,19 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 <div _canonical_uri="images/62.jpg" created="20170910090008496" modified="20170910090041353" tags="" title="defaultBackground" type="image/jpeg">
 <pre></pre>
 </div>
-<div accordion1="" accordion2="" accordion3="open" accordion4="open" created="20171031153728026" modified="20171102101322981" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
+<div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171103122851557" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
 <pre>! Issues with CreateProcess
 
 &lt;$button&gt;
-&lt;$action-setfield accordion1=&quot;open&quot; accordion2=&quot;open&quot;/&gt;
+&lt;$action-setfield accordion1=&quot;open&quot; accordion2=&quot;open&quot; accordion3=&quot;open&quot;/&gt;
 Open all
 &lt;/$button&gt; 
 &lt;$button&gt;
-&lt;$action-setfield accordion1=&quot;&quot; accordion2=&quot;&quot;/&gt;
+&lt;$action-setfield accordion1=&quot;&quot; accordion2=&quot;&quot; accordion3=&quot;&quot;/&gt;
 Close all
 &lt;/$button&gt;
 
-&lt;$details summary=&quot;How CreateProcess Works&quot; state=&quot;!!accordion1&quot;&gt;
+&lt;$details summary=&quot;Search path injection&quot; state=&quot;!!accordion1&quot;&gt;
 
 Creates a new process and its primary thread. The new process runs in the security context of the calling process.
 
@@ -10346,10 +10380,6 @@ BOOL WINAPI CreateProcess(
   _Out_       LPPROCESS_INFORMATION lpProcessInformation
 )
 ```
-
-&lt;/$details&gt;
-&lt;$details summary=&quot;Search path injection&quot; state=&quot;!!accordion2&quot;&gt;
-
 !! Search path injection
 The preferred method of using CreateProcess is to set lpApplicationName to the full path of the application to run and fill lpCommandLine with any optional arguments to the application. However, this method is not strictly enforced allowing developers to set any one of the two arguments to NULL.
 In the first case, a developer may set lpApplicationName to NULL and set lpCommandLine to the string used to launch the application from the command prompt. In this case, if the absolute path to the application is not specified, the system attempts to look for it in a few known locations. This gives rise to a problem known as Search Path Injection. The order in which the system looks into the known folders is:
@@ -10376,6 +10406,40 @@ c:\program files\sub dir\program name.exe&lt;br/&gt;
 This results in c:\program.exe being called prior to program name.exe and allows automatic startup of a potentially rogue application.
 If the vulnerable application tries to launch an application located in some folder inside &quot;C:\Program Files&quot;, all the hacker has to do is to name his executable program.exe and place it in &quot;C:\&quot;.&lt;br/&gt;
 The mitigation for this problem is to use quoted strings to indicate where the file name ends and the arguments begin; otherwise, the file name is ambiguous. Hence in the above example we would pass the literal string &quot;\&quot;C:\\program files\\sub dir\\program name\&quot;&quot; as lpCommandLine. Note however, the above mentioned problem does not arise if lpApplicationName is non-NULL.
+&lt;/$details&gt;
+&lt;$details summary=&quot;Token Stealing using EPROCESS&quot; state=&quot;!!accordion2&quot;&gt;
+The first stage in CreateProcess is to find the appropriate Win32 image that will run the executable file specified by the caller and to create a section object to later map it into the address space of the new process. Next it creates a Windows 2000 executive process object to run the image by calling the internal system function NtCreateProcess.Its work including setting up and initialize the EPROCESS block.
+
+Windows represents each process in memory by EPROCESS block. It is a block that contains pointers to both next and previous EPROCESS blocks.
+
+&lt;center&gt;[img[compare|images/eprocess2.png]]&lt;/center&gt;
+To perform token stealing is really simple in old windows. It is about to retrieve the KPCR base directly from 0xffdff000, getting current thread,then the current process. After that, walk through the link list of EPROCESS object to find out the process with pid as 4, which is the system process, then duplicate its token, and finally overwrite the token of current process. This will make the process to elevate to SYSTEM privileges.
+For recent windows system finding EPROCESS structure need some work. In a first step, the exploit code has to find a reference to the EPROCESS structure of its own process. To do this, the code calls NtQuerySystemInformation (passing SystemHandleInformation, 0x10), which returns information about all handles acquired by any process. The information is returned using the SYSTEM_HANDLE_INFORMATION structure.
+&lt;br/&gt;
+&lt;br/&gt;
+typedef struct _SYSTEM_HANDLE_INFORMATION&lt;br/&gt;
+{&lt;br/&gt;
+   ULONG ProcessId;&lt;br/&gt;
+   BYTE ObjectTypeNumber;&lt;br/&gt;
+   BYTE Flags;&lt;br/&gt;
+   USHORT Handle;&lt;br/&gt;
+   PVOID Object;&lt;br/&gt;
+   ACCESS_MASK GrantedAccess;&lt;br/&gt;
+} SYSTEM_HANDLE_INFORMATION, &lt;br/&gt;*PSYSTEM_HANDLE_INFORMATION;&lt;br/&gt;
+
+&lt;br/&gt;
+which reveals a structure’s address in kernel memory through the Object member.&lt;br/&gt;
+To find the correct process handle, the code uses DuplicateHandle and then searches for the correct instance in the list of objects, obtaining the memory address of the EPROCESS object in kernel space.&lt;br/&gt;
+To successfully steal another process’ privileges, the exploit needs to modify a few member variables of its EPROCESS structure, such as the PID (EPROCESS::UniqueProcessId) and access token (EPROCESS::Token).
+
+However, as mentioned above, the layout of the structure and thus the position of these values within the structures (that is, their offsets in memory) may change arbitrarily between different OS versions.To resolve these memory offsets, the attackers use another clever trick: they calculate the offsets from documented kernel interfaces. For example, PsGetProcessId is a well-documented, standardized API. This function takes a reference to an EPROCESS structure as argument, and returns the ProcessId. Clearly, this requires accessing the ProcessId member in the memory of the structure.
+&lt;br/&gt;
+Once the memory layout (location of structures) as well as their format (offsets within the structures) are known, the exploit can elevate privileges of its own process. To do so, it traverses the ActiveProcessLinks, a doubly-linked list of EPROCESS structures of active processes, to find the System process entry (with PID 4).From there, the exploit duplicates the access token into its own structure, essentially gaining the same (system) privileges.
+&lt;br/&gt;
+[[Detailed description with Eplotitation example on Windows 7 here|Access token stealing on Windows]]
+&lt;/$details&gt;
+&lt;$details summary=&quot;new&quot; state=&quot;!!accordion3&quot;&gt;
+
 &lt;/$details&gt;</pre>
 </div>
 <div created="20170908212738743" modified="20170908212738743" title="Introduction">
