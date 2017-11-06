@@ -8775,10 +8775,16 @@ These conditions and events make us curious to work on analysing and comparing t
 <div created="20170907095227641" modified="20170908212759455" title="$:/DefaultTiddlers">
 <pre>__Introduction__</pre>
 </div>
-<div status="complete" title="$:/Import">
-<pre>The following tiddlers were imported:
-
-# [[$:/plugins/telmiger/details/details.css]]</pre>
+<div plugin-type="import" status="pending" title="$:/Import" type="application/json">
+<pre>{
+    &quot;tiddlers&quot;: {
+        &quot;Untitled 1&quot;: {
+            &quot;title&quot;: &quot;Untitled 1&quot;,
+            &quot;text&quot;: &quot;Program execution begins in the Linux kernel. To run a program, a process will call a function from the exec family. The functions in this family are all very similar, differing only in small details regarding the manner of passing arguments and environment variables to the invoked program. What they all end up doing is issuing the sys_execve system call to the Linux kernel.&quot;,
+            &quot;type&quot;: &quot;text/plain&quot;
+        }
+    }
+}</pre>
 </div>
 <div title="$:/isEncrypted">
 <pre>no</pre>
@@ -9542,8 +9548,8 @@ exports.details = DetailsWidget;
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20171103145342658" title="$:/state/showeditpreview">
-<pre>yes</pre>
+<div created="20170907105631882" modified="20171106103733032" title="$:/state/showeditpreview">
+<pre>no</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
 <pre>yes</pre>
@@ -9593,11 +9599,11 @@ exports.details = DetailsWidget;
 <div created="20171028180156863" modified="20171103151915592" title="$:/state/toc/Contents-Login Security-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029100419970" modified="20171103151909186" title="$:/state/toc/Contents-Program Execution-209360082">
-<pre>close</pre>
+<div created="20171029100419970" modified="20171106103721131" title="$:/state/toc/Contents-Program Execution-209360082">
+<pre>open</pre>
 </div>
-<div created="20171029102407659" modified="20171103151907581" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
-<pre>close</pre>
+<div created="20171029102407659" modified="20171106103723515" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
+<pre>open</pre>
 </div>
 <div created="20171031153920976" modified="20171103151906028" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
 <pre>close</pre>
@@ -9605,7 +9611,7 @@ exports.details = DetailsWidget;
 <div created="20171103122553855" modified="20171103151904204" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
 <pre>close</pre>
 </div>
-<div list="__Introduction__" title="$:/StoryList">
+<div list="[[Linux Loader]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10537,8 +10543,151 @@ activity. Additionally, all the routing and address resolution issues are implem
 While much of Linux is independent of the architecture on which it runs, there are elements that must consider the architecture for normal operation and for efficiency. The ./linux/arch subdirectory defines the architecture-dependent portion of the kernel source contained in a number of subdirectories that are specific to the architecture (collectively forming the BSP). For a typical desktop, the i386 directory is used. Each architecture subdirectory contains a number of other subdirectories that focus on a particular aspect of the kernel, such as boot, kernel, memory management, and others. You can find the architecture-dependent code in ./linux/arch.
 </pre>
 </div>
-<div created="20171029102420210" modified="20171030043914949" tags="[[Program Loading]]" title="Linux Loader">
-<pre>Lets start with</pre>
+<div created="20171029102420210" modified="20171106120842653" tags="[[Program Loading]]" title="Linux Loader">
+<pre>Program execution begins in the Linux kernel. To run a program, a process will call a function from the //exec// family. The functions in this family are all very similar, differing only in small details regarding the manner of passing arguments and environment variables to the invoked program. What they all end up doing is issuing the //sys_execve// system call to the Linux kernel.&lt;br/&gt;
+
+```
+int execve(const char *filename, char *const argv[],
+                  char *const envp[]);
+```
+
+
+//sys_execve// does a lot of work to prepare the new program for execution.As part of its job, the kernel must read the program's executable file from disk into memory and prepare it for execution. The kernel knows how to handle a lot of binary file formats, and tries to open the file with different handlers until it succeeds (this happens in the function search_binary_handler in //fs/exec.c//).
+
+The kernel then goes on mapping the program's segments into memory, according to the information contained in the ELF program headers. Finally, it passes the execution, by directly modifying the IP register, to the entry address read from the ELF header of the program (e_entry). Arguments are passed to the program on the stack (the code responsible for this is in //create_elf_tables//).
+
+!! Kernel Work explained in more details
+
+Implementation of the execve is pretty simple here, as we can see it just returns the result of the do_execve function. The do_execve function defined in the same source code file and do the following things:
+
+* Initialize two pointers on a userspace data with the given arguments and environment variables;
+* return the result of the do_execveat_common.
+
+We can see its implementation:
+
+
+```
+struct user_arg_ptr argv = { .ptr.native = __argv };
+struct user_arg_ptr envp = { .ptr.native = __envp };
+return do_execveat_common(AT_FDCWD, filename, argv, envp, 0);
+```
+
+
+The do_execveat_common function does main work - it executes a new program. This function takes similar set of arguments, but as you can see it takes five arguments instead of three. The first argument is the file descriptor that represent directory with our application, in our case the AT_FDCWD means that the given pathname is interpreted relative to the current working directory of the calling process. The fifth argument is flags. In our case we passed 0 to the do_execveat_common.
+First of all the do_execveat_common function checks the filename pointer and returns if it is NULL. After this we check flags of the current process that limit of running processes is not exceed:
+
+```
+if (IS_ERR(filename))
+    return PTR_ERR(filename);
+
+if ((current-&gt;flags &amp; PF_NPROC_EXCEEDED) &amp;&amp;
+    atomic_read(&amp;current_user()-&gt;processes) &gt; rlimit(RLIMIT_NPROC)) {
+    retval = -EAGAIN;
+    goto out_ret;
+}
+
+current-&gt;flags &amp;= ~PF_NPROC_EXCEEDED;
+```
+If these two checks were successful we unset PF_NPROC_EXCEEDED flag in the flags of the current process to prevent fail of the execve.&lt;br/&gt;
+ In the next step we start preparation of the bprm that represented by the struct linux_binprm structure (defined in the include/linux/binfmts.h header file). The linux_binprm structure is used to hold the arguments that are used when loading binaries. For example it contains vma field which has vm_area_struct type and represents single memory area over a contiguous interval in a given address space where our application will be loaded, mm field which is memory descriptor of the binary, pointer to the top of memory and many other different fields.&lt;br/&gt;
+ First of all we allocate memory for this structure with the kzalloc function and check the result of the allocation:
+
+```
+ bprm = kzalloc(sizeof(*bprm), GFP_KERNEL);
+if (!bprm)
+    goto out_files;
+
+```
+After all of these operations we call the //do_open_execat// function that checks the flags that we passed to the do_execveat_common function (remember that we have 0 in the flags) and searches and opens executable file on disk, checks that our we will load a binary file from noexec mount points (we need to avoid execute a binary from filesystems that do not contain executable binaries like proc or sysfs), initializes file structure and returns pointer on this structure.
+
+```
+file = do_open_execat(fd, filename, flags);
+retval = PTR_ERR(file);
+if (IS_ERR(file))
+    goto out_unmark;
+
+sched_exec();
+```
+After this we need to check file descriptor of the give executable binary. We try to check does the name of the our binary file starts from the / symbol or does the path of the given executable binary is interpreted relative to the current working directory of the calling process or in other words file descriptor is //AT_FDCWD//.&lt;br/&gt;
+After this we calculate the count of the command line arguments which are were passed to the our executable binary, the count of the environment variables and set it to the bprm-&gt;argc and bprm-&gt;envc respectively:
+
+```
+bprm-&gt;argc = count(argv, MAX_ARG_STRINGS);
+if ((retval = bprm-&gt;argc) &lt; 0)
+    goto out;
+
+bprm-&gt;envc = count(envp, MAX_ARG_STRINGS);
+if ((retval = bprm-&gt;envc) &lt; 0)
+    goto out;
+```
+
+After the preparation of the linux_bprm structure we copy the filename of the executable binary file, command line arguments and environment variables to the linux_bprm with the call of the copy_strings_kernel function.And set the pointer to the top of new program's stack that we set in the bprm_mm_init function.The top of the stack will contain the program filename and we store this filename to the exec field of the linux_bprm structure.
+
+```
+old_pid = current-&gt;pid;
+rcu_read_lock();
+old_vpid = task_pid_nr_ns(current, task_active_pid_ns(current-&gt;parent));
+rcu_read_unlock();
+
+```
+
+and call the:
+
+search_binary_handler(bprm);
+
+function. This function goes through the list of handlers that contains different binary formats. 
+
+[[more details here |https://0xax.gitbooks.io/linux-insides/content/SysCall/syscall-4.html]]
+
+!! Program entry point
+Unless you're doing something very funky, the final program binary image is probably being created by the system linker  ld. By default, ld looks for a special symbol called _start in one of the object files linked into the program, and sets the entry point to the address of that symbol.This will be simplest to demonstrate with an example written in assembly (the following is NASM syntax):
+
+
+```
+section    .text
+    ; The _start symbol must be declared for the linker (ld)
+    global _start
+
+_start:
+    ; Execute sys_exit call. Argument: status -&gt; ebx
+    mov     eax, 1
+    mov     ebx, 42
+    int     0x80
+```
+We're usually not writing our code in assembly, however. For C/C++ the situation is different, because the entry point familiar to users is the main function and not the _start symbol. Now it's time to explain how these two are related.
+[img[compare|images/callgraph.png]]
+
+Program execution start with _start.
+
+```
+080482e0 &lt;_start&gt;: 
+80482e0: 31 ed xor %ebp,%ebp 
+80482e2: 5e pop %esi 
+80482e3: 89 e1 mov %esp,%ecx 
+80482e5: 83 e4 f0 and $0xfffffff0,%esp 
+80482e8: 50 push %eax 
+80482e9: 54 push %esp 
+80482ea: 52 push %edx 
+80482eb: 68 00 84 04 08 push $0x8048400 
+80482f0: 68 a0 83 04 08 push $0x80483a0 
+80482f5: 51 push %ecx 
+80482f6: 56 push %esi 
+80482f7: 68 94 83 04 08 push $0x8048394 
+80482fc: e8 c3 ff ff ff call 80482c4 &lt;__libc_start_main@plt&gt; 
+8048301: f4 hlt
+```
+_start push arguments for  _libc_start_main onto the stack.
+
+```
+int __libc_start_main( int (*main) (int, char * *, char * *), int argc, char * * ubp_av, void (*init) (void), void (*fini) (void), void (*rtld_fini) (void), void (* stack_end));
+```
+
+
+Well, //_libc_start_main// calls //_libc_init_first//  who immediately uses secret inside information to find the environment variables just after the terminating null of the argument vector and then sets a global variable //_environ// which //_libc_start_main// uses there after whenever it needs it including when it calls main.&lt;br/&gt;
+
+ [[more details here |www.dbp-consulting.com/tutorials/debugging/linuxProgramStartup.html]] 
+
+--</pre>
 </div>
 <div created="20171028180138383" modified="20171028180154211" tags="[[Login Security]]" title="Linux Login">
 <pre></pre>
