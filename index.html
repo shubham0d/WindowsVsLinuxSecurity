@@ -9599,19 +9599,19 @@ exports.details = DetailsWidget;
 <div created="20171028180156863" modified="20171103151915592" title="$:/state/toc/Contents-Login Security-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029100419970" modified="20171106103721131" title="$:/state/toc/Contents-Program Execution-209360082">
-<pre>open</pre>
+<div created="20171029100419970" modified="20171109085015958" title="$:/state/toc/Contents-Program Execution-209360082">
+<pre>close</pre>
 </div>
 <div created="20171029102407659" modified="20171106103723515" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
 <pre>open</pre>
 </div>
-<div created="20171031153920976" modified="20171103151906028" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
-<pre>close</pre>
+<div created="20171031153920976" modified="20171109052225485" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
+<pre>open</pre>
 </div>
 <div created="20171103122553855" modified="20171103151904204" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
 <pre>close</pre>
 </div>
-<div list="[[Linux Loader]] __Introduction__" title="$:/StoryList">
+<div list="[[Exploiting Windows Program Loading]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10361,7 +10361,7 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 <div _canonical_uri="images/62.jpg" created="20170910090008496" modified="20170910090041353" tags="" title="defaultBackground" type="image/jpeg">
 <pre></pre>
 </div>
-<div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171103151842073" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
+<div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171109084537326" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
 <pre>! Issues with CreateProcess
 
 &lt;$button&gt;
@@ -10479,8 +10479,24 @@ Once the memory layout (location of structures) as well as their format (offsets
 
 
 &lt;/$details&gt;
-&lt;$details summary=&quot;new&quot; state=&quot;!!accordion3&quot;&gt;
+&lt;$details summary=&quot;Dll injection using LdrpInitializeProcess&quot; state=&quot;!!accordion3&quot;&gt;
 
+!! Starter
+''Microsoft Application Verifier Provider'' Microsoft offers a standard way to install runtime verification tools for native code via Microsoft Application Verifier Provider DLLs. A verifier provider DLL is simply a DLL that is loaded into the process and is responsible for performing runtime verifications for the application. In order to register a new Application Verifier Provider DLL one needs to create a verifier provider DLL and register it by creating a set of keys in the registry. Once a DLL has been registered as a verifier provider DLL for a process, it would permanently be injected by the Windows Loader into the process every time the process starts, even after reboots/updates/reinstalls/patches/etc.
+
+''Registration Application verifier'' providers are registered per executable name, meaning each DLL is bounded to a specific executable name, and would be injected to every new process that was launched with the registered process name. e.g. If one would register DoubleAgentDll.dll to cmd.exe and would launch: “C:/cmd.exe” and “C:/Windows/System32/cmd.exe” then DoubleAgentDll.dll would be injected to both processes. Once registered, the injection happens automatically by the operating system every time a new process is created with the registered name. The injection would happen consistently regardless of rebootsupdatesreinstallspatches or anything else. Each time a new process is created with the registered name it would be injected with the application verifier provider. One can register a new application verifier provider by using our publicly available DoubleAgent project.&lt;br /&gt;
+
+!! Injection
+Injection Every process starts when the operating system transfers control from kernel mode to user mode by calling ntdll!LdrInitializeThunk. From this moment ntdll is responsible for initializing the process (initializing globals, loading imports, etc.) and eventually transferring control to the executed program’s main function.&lt;br/&gt;
+[img[compare|images/ldrInitalizeThunk.png]]
+&lt;br/&gt;
+The process is in such an infant stage that the only loaded modules are ntdll.dll and the executable (NS.exe).&lt;br/&gt;
+Ntdll doesn’t waste time and starts initializing the process, when most of the initialization happens in ntdll!LdrpInitializeProcess. Normally the first DLL that would be loaded would be kernel32.dll.But if Application Verifier is on, ntdll!LdrpInitializeProcess calls ntdll!AVrfInitializeVerifier which causes our verifier provider DLL to get loaded just before loading kernel32.&lt;br/&gt;
+Loading at such an early stage, before any other system dll, gives us absolute control over the process.
+&lt;br/&gt;
+[img[compare|images/ourDll.png]]
+&lt;br/&gt;
+Once our DLL has been loaded by ntdll, our DllMain would be called and we are free to do as we wish inside the victim process.  
 &lt;/$details&gt;</pre>
 </div>
 <div created="20170908212738743" modified="20170908212738743" title="Introduction">
