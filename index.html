@@ -9599,7 +9599,7 @@ exports.details = DetailsWidget;
 <div created="20171028180156863" modified="20171103151915592" title="$:/state/toc/Contents-Login Security-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029100419970" modified="20171109085015958" title="$:/state/toc/Contents-Program Execution-209360082">
+<div created="20171029100419970" modified="20171110180255918" title="$:/state/toc/Contents-Program Execution-209360082">
 <pre>close</pre>
 </div>
 <div created="20171029102407659" modified="20171106103723515" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
@@ -9608,10 +9608,10 @@ exports.details = DetailsWidget;
 <div created="20171031153920976" modified="20171109052225485" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
 <pre>open</pre>
 </div>
-<div created="20171103122553855" modified="20171103151904204" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
-<pre>close</pre>
+<div created="20171103122553855" modified="20171110154930136" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
+<pre>open</pre>
 </div>
-<div list="[[Exploiting Windows Program Loading]] __Introduction__" title="$:/StoryList">
+<div list="__Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10559,7 +10559,7 @@ activity. Additionally, all the routing and address resolution issues are implem
 While much of Linux is independent of the architecture on which it runs, there are elements that must consider the architecture for normal operation and for efficiency. The ./linux/arch subdirectory defines the architecture-dependent portion of the kernel source contained in a number of subdirectories that are specific to the architecture (collectively forming the BSP). For a typical desktop, the i386 directory is used. Each architecture subdirectory contains a number of other subdirectories that focus on a particular aspect of the kernel, such as boot, kernel, memory management, and others. You can find the architecture-dependent code in ./linux/arch.
 </pre>
 </div>
-<div created="20171029102420210" modified="20171106120842653" tags="[[Program Loading]]" title="Linux Loader">
+<div created="20171029102420210" modified="20171110174611806" tags="[[Program Loading]]" title="Linux Loader">
 <pre>Program execution begins in the Linux kernel. To run a program, a process will call a function from the //exec// family. The functions in this family are all very similar, differing only in small details regarding the manner of passing arguments and environment variables to the invoked program. What they all end up doing is issuing the //sys_execve// system call to the Linux kernel.&lt;br/&gt;
 
 ```
@@ -10572,7 +10572,7 @@ int execve(const char *filename, char *const argv[],
 
 The kernel then goes on mapping the program's segments into memory, according to the information contained in the ELF program headers. Finally, it passes the execution, by directly modifying the IP register, to the entry address read from the ELF header of the program (e_entry). Arguments are passed to the program on the stack (the code responsible for this is in //create_elf_tables//).
 
-!! Kernel Work explained in more details
+!! Kernel Work explained: struct linux_binprm
 
 Implementation of the execve is pretty simple here, as we can see it just returns the result of the do_execve function. The do_execve function defined in the same source code file and do the following things:
 
@@ -10605,54 +10605,38 @@ if ((current-&gt;flags &amp; PF_NPROC_EXCEEDED) &amp;&amp;
 current-&gt;flags &amp;= ~PF_NPROC_EXCEEDED;
 ```
 If these two checks were successful we unset PF_NPROC_EXCEEDED flag in the flags of the current process to prevent fail of the execve.&lt;br/&gt;
- In the next step we start preparation of the bprm that represented by the struct linux_binprm structure (defined in the include/linux/binfmts.h header file). The linux_binprm structure is used to hold the arguments that are used when loading binaries. For example it contains vma field which has vm_area_struct type and represents single memory area over a contiguous interval in a given address space where our application will be loaded, mm field which is memory descriptor of the binary, pointer to the top of memory and many other different fields.&lt;br/&gt;
- First of all we allocate memory for this structure with the kzalloc function and check the result of the allocation:
+ In the next step we start preparation of the bprm that represented by the struct linux_binprm structure (defined in the include/linux/binfmts.h header file). The linux_binprm[[here |http://elixir.free-electrons.com/linux/v3.18/source/include/linux/binfmts.h#L14]] structure is used to hold the arguments that are used when loading binaries. For example it contains vma field which has vm_area_struct type and represents single memory area over a contiguous interval in a given address space where our application will be loaded, mm field which is memory descriptor of the binary, pointer to the top of memory and many other different fields.&lt;br/&gt;
+  In the structure these things happen:
 
-```
- bprm = kzalloc(sizeof(*bprm), GFP_KERNEL);
-if (!bprm)
-    goto out_files;
+* The file field is set to a freshly opened struct file for the program being invoked; this allows the kernel to read the file contents and decide how to handle the file.
+* The filename and interp fields are both set to the name of the file holding the program; we'll see later why there are two distinct fields here.
+* The bprm_mm_init() function allocates and sets up the associated struct mm_struct and struct vm_area_struct data structures in preparation for managing the virtual memory of the new program. In particular, the new program's virtual memory ends at the highest possible address for the architecture; its stack will grow downward from there.
+* The p field is set to point at the end of memory space for the new program, but leaves space for a NULL pointer as an end marker for the stack. The value of p will be updated (downward) as more information is added to the new program's stack.
+* The argc and envc fields are set to hold the counts of arguments and environment values so that this information can be propagated to the new program later in the invocation process.
+* The unsafe field is set up to hold a bitmask of reasons why the program execution might not be safe; for example, if the process is being traced with ptrace() or has the PR_SET_NO_NEW_PRIVS bit set. The Linux Security Module (LSM) may subsequently use this information to deny the program execution operation.
+* The cred field is a separately allocated object of type struct cred that holds information about the credentials for the new program. These are generally inherited from the process that called execve(), but are updated to allow for setuid / setgid bits and other complications. The presence of setuid/setgid bits also disallows a collection of compatibility features because they have an adverse effect on security; the per_clear field records the bits in the process's personality that will be cleared later.
+* The security field allows an LSM to store LSM-specific information with the linux_binprm; the LSM is notified via a call to security_bprm_set_creds() and the bprm_set_creds LSM hook. The default implementation of this hook updates the new program's Linux capabilities to allow for the file capabilities of the program file; other LSM implementations chain this behavior into their own implementations of the hook (e.g. Smack, SELinux).
+* The buf scratch space is filled with the first chunk (128 bytes) of data from the program file. This data will be used later to detect the binary format so it can be processed appropriately.
 
-```
-After all of these operations we call the //do_open_execat// function that checks the flags that we passed to the do_execveat_common function (remember that we have 0 in the flags) and searches and opens executable file on disk, checks that our we will load a binary file from noexec mount points (we need to avoid execute a binary from filesystems that do not contain executable binaries like proc or sysfs), initializes file structure and returns pointer on this structure.
+The parts of this setup process that depend on the particular file that's being executed are performed in an inner prepare_binprm() function; this function can be called again later to update those fields if a different file (e.g. a script interpreter) is actually run. . 
 
-```
-file = do_open_execat(fd, filename, flags);
-retval = PTR_ERR(file);
-if (IS_ERR(file))
-    goto out_unmark;
+!!! Binary format handler iteration: struct linux_binfmt
 
-sched_exec();
-```
-After this we need to check file descriptor of the give executable binary. We try to check does the name of the our binary file starts from the / symbol or does the path of the given executable binary is interpreted relative to the current working directory of the calling process or in other words file descriptor is //AT_FDCWD//.&lt;br/&gt;
-After this we calculate the count of the command line arguments which are were passed to the our executable binary, the count of the environment variables and set it to the bprm-&gt;argc and bprm-&gt;envc respectively:
+With a complete struct linux_binprm in hand, the real business of program execution is performed in exec_binprm() and (more importantly) search_binary_handler(). This code iterates over a list of struct linux_binfmt objects, each of which provides a handler for a particular format of binary programs. A binary handler could potentially be defined in a kernel module, so the code calls try_module_get() for each format to ensure the relevant code can't be unloaded by another task while it's being used here.
 
-```
-bprm-&gt;argc = count(argv, MAX_ARG_STRINGS);
-if ((retval = bprm-&gt;argc) &lt; 0)
-    goto out;
+For each struct linux_binfmt handler object, the load_binary() function pointer is called, passing in the linux_binprm object. If the handler code supports the binary format, it does whatever is needed to prepare the program for execution and returns success (&gt;= 0). Otherwise, the handler returns a failure code (&lt; 0) and iteration continues with the next handler. 
 
-bprm-&gt;envc = count(envp, MAX_ARG_STRINGS);
-if ((retval = bprm-&gt;envc) &lt; 0)
-    goto out;
-```
+!!! Miscellaneous interpreter detection: binfmt_misc.c
 
-After the preparation of the linux_bprm structure we copy the filename of the executable binary file, command line arguments and environment variables to the linux_bprm with the call of the copy_strings_kernel function.And set the pointer to the top of new program's stack that we set in the bprm_mm_init function.The top of the stack will contain the program filename and we store this filename to the exec field of the linux_bprm structure.
+We saw previously that early versions of the Linux kernel supported a rough-and-ready way of dynamically adding format support, by hunting for a kernel module with a name containing the early bytes of the binary. That's not particularly convenient — only searching on a couple of bytes is very limited (compare the vast range of detection signatures that the file command uses) and requiring a kernel module raises the barrier to entry.
 
-```
-old_pid = current-&gt;pid;
-rcu_read_lock();
-old_vpid = task_pid_nr_ns(current, task_active_pid_ns(current-&gt;parent));
-rcu_read_unlock();
+The miscellaneous binary format handler allows a more flexible and dynamic method of dealing with new formats, by allowing run-time configuration (via a special filesystem mounted under /proc/sys/fs/binfmt_misc) to specify:
 
-```
+    How to recognize a supported format, based on filename extension or a magic value at a particular offset. (As with parsing script interpreters, this magic value has to fall within the first 128 bytes of the program file.)
+    The interpreter program to invoke, which will get the program filename passed to it as argv[1] (as with script invocation).
 
-and call the:
-
-search_binary_handler(bprm);
-
-function. This function goes through the list of handlers that contains different binary formats. 
-
+A good example of the miscellaneous format handler in use is for Java files: detect .class files (based on their 0xCAFEBABE prefix) or .jar files (based on the .jar extension) and automatically invoke the JVM executable on them. This will require a wrapper script to provide the relevant command-line arguments, as the miscellaneous configuration doesn't allow arguments to be specified — which means that the miscellaneous handler will invoke the script handler, which will then invoke the ELF handler for the JVM executable (and which will probably in turn invoke the dynamic linker ld.so, although that's a somewhat different story).&lt;br/&gt;
+[[ great lwn article part:1|https://lwn.net/Articles/630727/]]&lt;br/&gt;
 [[more details here |https://0xax.gitbooks.io/linux-insides/content/SysCall/syscall-4.html]]
 
 !! Program entry point
@@ -10700,8 +10684,8 @@ int __libc_start_main( int (*main) (int, char * *, char * *), int argc, char * *
 
 
 Well, //_libc_start_main// calls //_libc_init_first//  who immediately uses secret inside information to find the environment variables just after the terminating null of the argument vector and then sets a global variable //_environ// which //_libc_start_main// uses there after whenever it needs it including when it calls main.&lt;br/&gt;
-
- [[more details here |www.dbp-consulting.com/tutorials/debugging/linuxProgramStartup.html]] 
+[[lwn article part:2|https://lwn.net/Articles/631631/]]&lt;br/&gt;
+[[more details here|www.dbp-consulting.com/tutorials/debugging/linuxProgramStartup.html]] 
 
 --</pre>
 </div>
