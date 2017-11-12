@@ -484,6 +484,8 @@ Error message and password prompt
 
 <li>Project approach</li>
 
+<li>Search Injection</li>
+
 <li>Services Used</li>
 
 <li>Timeline</li>
@@ -9603,22 +9605,22 @@ exports.details = DetailsWidget;
 <div created="20171028180156863" modified="20171103151915592" title="$:/state/toc/Contents-Login Security-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029100419970" modified="20171111040336739" title="$:/state/toc/Contents-Program Execution-209360082">
-<pre>open</pre>
+<div created="20171029100419970" modified="20171112213156224" title="$:/state/toc/Contents-Program Execution-209360082">
+<pre>close</pre>
 </div>
-<div created="20171029102407659" modified="20171106103723515" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
-<pre>open</pre>
+<div created="20171029102407659" modified="20171112213154754" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
+<pre>close</pre>
 </div>
-<div created="20171112102653681" modified="20171112102653681" title="$:/state/toc/Contents/Program Execution/Program Loading-Linux Loader-209360082">
-<pre>open</pre>
+<div created="20171112102653681" modified="20171112213153456" title="$:/state/toc/Contents/Program Execution/Program Loading-Linux Loader-209360082">
+<pre>close</pre>
 </div>
-<div created="20171031153920976" modified="20171109052225485" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
-<pre>open</pre>
+<div created="20171031153920976" modified="20171112213152208" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
+<pre>close</pre>
 </div>
-<div created="20171103122553855" modified="20171110154930136" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
-<pre>open</pre>
+<div created="20171103122553855" modified="20171112213147672" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
+<pre>close</pre>
 </div>
-<div list="[[Exploiting Windows Program Loading]] [[Exploiting Linux Program Loading]] __Introduction__" title="$:/StoryList">
+<div list="[[Exploiting Windows Program Loading]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10382,7 +10384,7 @@ Close all
 
 &lt;/$details&gt;</pre>
 </div>
-<div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171109084537326" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
+<div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171112213140394" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
 <pre>! Issues with CreateProcess
 
 &lt;$button&gt;
@@ -10442,7 +10444,8 @@ c:\program files\sub dir\program name.exe&lt;br/&gt;
 This results in c:\program.exe being called prior to program name.exe and allows automatic startup of a potentially rogue application.
 If the vulnerable application tries to launch an application located in some folder inside &quot;C:\Program Files&quot;, all the hacker has to do is to name his executable program.exe and place it in &quot;C:\&quot;.&lt;br/&gt;
 The mitigation for this problem is to use quoted strings to indicate where the file name ends and the arguments begin; otherwise, the file name is ambiguous. Hence in the above example we would pass the literal string &quot;C:\\program files\\sub dir\\program name\&quot; as lpCommandLine. Note however, the above mentioned problem does not arise if lpApplicationName is non-NULL.
-
+&lt;br/&gt;
+[[Code Here|Search Injection]]
 &lt;/$details&gt;
 
 &lt;$details summary=&quot;Token Stealing using EPROCESS&quot;  state=&quot;!!accordion2&quot;&gt;
@@ -10742,6 +10745,54 @@ In computing, a loader is the part of an operating system that is responsible fo
 <div created="20170909154331971" modified="20170911084757886" tags="Contents" title="Project approach">
 <pre>---
 &lt;center&gt; [[Next|Architecture]]&lt;/center&gt;</pre>
+</div>
+<div created="20171112212304738" modified="20171112212856398" tags="" title="Search Injection">
+<pre>```cpp
+#include&lt;bits/stdc++.h&gt;
+#include &lt;windows.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;tchar.h&gt;
+using namespace std;
+
+int main(  )
+{
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
+
+    ZeroMemory( &amp;si, sizeof(si) );
+    si.cb = sizeof(si);
+    ZeroMemory( &amp;pi, sizeof(pi) );
+
+
+    // Start the child process.
+
+    if( !CreateProcess(NULL,   // No module name (use command line)
+        &quot;C:\\Users\\Harshit\\Desktop\\program file\\calc.exe&quot;,        // Command line
+        NULL,           // Process handle not inheritable
+        NULL,           // Thread handle not inheritable
+        FALSE,          // Set handle inheritance to FALSE
+        0,              // No creation flags
+        NULL,           // Use parent's environment block
+        NULL,           // Use parent's starting directory
+        &amp;si,            // Pointer to STARTUPINFO structure
+        &amp;pi )           // Pointer to PROCESS_INFORMATION structure
+    )
+    {
+        printf( &quot;CreateProcess failed (%d).\n&quot;, GetLastError() );
+        return -1;
+    }
+
+    // Wait until child process exits.
+    WaitForSingleObject( pi.hProcess, INFINITE );
+
+    // Close process and thread handles.
+    CloseHandle( pi.hProcess );
+    CloseHandle( pi.hThread );
+    return 0;
+}
+```
+
+For the given case if there is filename program.exe at location ''//C:\Users\Harshit\Desktop\//'' then it will get run before calc.exe.</pre>
 </div>
 <div created="20171029102103403" modified="20171029102119663" tags="[[Before you Begin]]" title="Services Used">
 <pre></pre>
