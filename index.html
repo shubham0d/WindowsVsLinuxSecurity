@@ -9599,28 +9599,28 @@ exports.details = DetailsWidget;
 <div created="20171102110722423" modified="20171102110723913" title="$:/state/toc/Contents-Before you Begin--428644737">
 <pre>close</pre>
 </div>
-<div created="20170909154550348" modified="20171103151919593" title="$:/state/toc/Contents-Before you Begin-209360082">
+<div created="20170909154550348" modified="20171113160753874" title="$:/state/toc/Contents-Before you Begin-209360082">
 <pre>close</pre>
 </div>
-<div created="20171028180156863" modified="20171103151915592" title="$:/state/toc/Contents-Login Security-209360082">
+<div created="20171028180156863" modified="20171113160803905" title="$:/state/toc/Contents-Login Security-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029100419970" modified="20171112213156224" title="$:/state/toc/Contents-Program Execution-209360082">
+<div created="20171029100419970" modified="20171113184702042" title="$:/state/toc/Contents-Program Execution-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029102407659" modified="20171112213154754" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
+<div created="20171029102407659" modified="20171113084531114" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
+<pre>open</pre>
+</div>
+<div created="20171112102653681" modified="20171113161547887" title="$:/state/toc/Contents/Program Execution/Program Loading-Linux Loader-209360082">
 <pre>close</pre>
 </div>
-<div created="20171112102653681" modified="20171112213153456" title="$:/state/toc/Contents/Program Execution/Program Loading-Linux Loader-209360082">
+<div created="20171031153920976" modified="20171113161544500" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
 <pre>close</pre>
 </div>
-<div created="20171031153920976" modified="20171112213152208" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
+<div created="20171103122553855" modified="20171113161541374" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
 <pre>close</pre>
 </div>
-<div created="20171103122553855" modified="20171112213147672" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
-<pre>close</pre>
-</div>
-<div list="[[Exploiting Windows Program Loading]] __Introduction__" title="$:/StoryList">
+<div list="__Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10370,7 +10370,7 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 <div _canonical_uri="images/62.jpg" created="20170910090008496" modified="20170910090041353" tags="" title="defaultBackground" type="image/jpeg">
 <pre></pre>
 </div>
-<div created="20171111040354076" modified="20171112103146396" tags="[[Linux Loader]]" title="Exploiting Linux Program Loading">
+<div accordion1="" created="20171111040354076" modified="20171113184705281" tags="[[Linux Loader]]" title="Exploiting Linux Program Loading">
 <pre>&lt;$button&gt;
 &lt;$action-setfield accordion1=&quot;open&quot;/&gt;
 Open all
@@ -10380,11 +10380,23 @@ Open all
 Close all
 &lt;/$button&gt;
 
-&lt;$details summary=&quot;Return to libc&quot; state=&quot;!!accordion1&quot;&gt;
+
+&lt;$details summary=&quot;Using Environment Variable to store shellcode&quot; state=&quot;!!accordion1&quot;&gt;
+
+//execve()// executes the program pointed to by filename. envp is an array of strings, conventionally of the form //key=value//, which are passed as environment to the  new  program.
+
+
+```cpp
+#include &lt;unistd.h&gt;
+
+       int execve(const char *filename, char *const argv[],
+                  char *const envp[]);
+```
+
 
 &lt;/$details&gt;</pre>
 </div>
-<div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171112213140394" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
+<div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171113161522482" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
 <pre>! Issues with CreateProcess
 
 &lt;$button&gt;
