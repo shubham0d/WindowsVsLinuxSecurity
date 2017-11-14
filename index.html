@@ -488,13 +488,13 @@ Error message and password prompt
 
 <li>Search Injection</li>
 
-<li>Services Used</li>
+<li>Technologies Used</li>
 
 <li>Timeline</li>
 
 <li>Untitled</li>
 
-<li>What all this is about?</li>
+<li>What is this all about?</li>
 
 <li>Who should read this?</li>
 
@@ -9556,7 +9556,7 @@ exports.details = DetailsWidget;
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20171114092345740" title="$:/state/showeditpreview">
+<div created="20170907105631882" modified="20171114115257202" title="$:/state/showeditpreview">
 <pre>no</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
@@ -9607,8 +9607,8 @@ exports.details = DetailsWidget;
 <div created="20171028180156863" modified="20171113160803905" title="$:/state/toc/Contents-Login Security-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029100419970" modified="20171114094016865" title="$:/state/toc/Contents-Program Execution-209360082">
-<pre>close</pre>
+<div created="20171029100419970" modified="20171114111604704" title="$:/state/toc/Contents-Program Execution-209360082">
+<pre>open</pre>
 </div>
 <div created="20171029102407659" modified="20171113084531114" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
 <pre>open</pre>
@@ -9622,7 +9622,7 @@ exports.details = DetailsWidget;
 <div created="20171103122553855" modified="20171113161541374" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
 <pre>close</pre>
 </div>
-<div list="__Introduction__" title="$:/StoryList">
+<div list="[[Before you Begin]] [[Contribute/Edit or Save offline content?]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10361,8 +10361,8 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 ---
 &lt;center&gt; [[Next|Project approach]]&lt;/center&gt;</pre>
 </div>
-<div created="20171114074206271" modified="20171114093845596" tags="" title="Buffer overflow using environmnent variables">
-<pre>!! Storing the Shellcode in the Environment Variable
+<div created="20171114074206271" modified="20171114111916608" tags="" title="Buffer overflow using environmnent variables">
+<pre>!!__ Storing the Shellcode in the Environment Variable__
 In your linux system, first step is to load the environment variables so that it get loaded in memory of every program executed next. We will create a simple program that will do that for us.
 
 
@@ -10410,6 +10410,8 @@ After running the //eggshell// you can view the shellcode EGG loaded into your e
 [img[loaded shell|images/shellcode.png]]
 &lt;br/&gt;
 
+!!__ Finding memory address of EGG__
+
 Now we need to find the address where EGG get loaded inside the program memory. To do that we will use a simple c program(you can also do that through gdb debugger).
 
 ```cpp
@@ -10427,6 +10429,8 @@ This program will return the address of EGG.&lt;br/&gt;
 [img[shell address|images/findShell.png]]
 &lt;br/&gt;
 This address may differ in your system. You just need to remember this value as it will be used to replace the return address of target program.&lt;br/&gt;
+
+!!__Exploiting the target program__
 Now our target program look like this which we are going to exploit.
 
 ```cpp
@@ -10452,8 +10456,25 @@ You can see that instead of displaying output 'done' only, we get a shell inside
 &lt;&lt;toc-selective-expandable 'Contents' sort[created]&gt;&gt;
 &lt;/div&gt;</pre>
 </div>
-<div created="20170909153433641" modified="20170909162004410" tags="[[Before you Begin]]" title="Contribute/Edit or Save offline content?">
-<pre></pre>
+<div created="20170909153433641" modified="20171114115258393" tags="[[Before you Begin]]" title="Contribute/Edit or Save offline content?">
+<pre>!! Saving the content for offline use
+
+You can do that by clicking on tick icon at the middle of right side of this page.
+
+!! Edit the content
+
+This project is built upon tiddlywiki [[link|https://tiddlywiki.com/]]. You need to know a little about using tiddlywiki(tutorials and docs on the link above), although you can do some basic changed without knowing anything by following way.
+
+* To edit a portion also known as tiddler just click on middle icon(look like pencil) in the upmost right of that tiddle.
+* To create a new tiddle just click on plus icon at the middle of right hand side of screen.
+* Click on the tick side at the right to download those changes.
+
+!! Contribute on this
+
+The project is hosted on github [[link|https://github.com/shubham0d/WindowsVsLinuxSecurity]]. To contribute just make changes and download it and then add a pull request to the project.
+
+
+''Have fun!!''</pre>
 </div>
 <div _canonical_uri="images/62.jpg" created="20170910090008496" modified="20170910090041353" tags="" title="defaultBackground" type="image/jpeg">
 <pre></pre>
@@ -10898,8 +10919,9 @@ int main(  )
 
 For the given case if there is filename program.exe at location ''//C:\Users\Harshit\Desktop\//'' then it will get run before calc.exe.</pre>
 </div>
-<div created="20171029102103403" modified="20171029102119663" tags="[[Before you Begin]]" title="Services Used">
-<pre></pre>
+<div created="20171029102103403" modified="20171114113949893" tags="[[Before you Begin]]" title="Technologies Used">
+<pre>!!! The primary system used by us is 32 bit version of Windows 7 and ubuntu 14.04 (LTS) with kernel 3.13.
+!!! Some time we will also use latest version of OSs to give you a brief idea about current state of security in these OS.</pre>
 </div>
 <div created="20170908043602851" modified="20170908043623563" tags="timeline" title="Timeline">
 <pre></pre>
@@ -10907,8 +10929,10 @@ For the given case if there is filename program.exe at location ''//C:\Users\Har
 <div title="Untitled">
 <pre>&lt;span class=&quot; tc-reveal&quot;&gt;&lt;span class=&quot; tc-reveal&quot;&gt;unfold it).&lt;/span&gt;&lt;/span&gt;</pre>
 </div>
-<div created="20170909132710614" modified="20171028175842650" tags="[[Before you Begin]]" title="What all this is about?">
-<pre>its like a timeline</pre>
+<div created="20170909132710614" modified="20171114114008399" tags="[[Before you Begin]]" title="What is this all about?">
+<pre>!!! These contents are part of our B.Tech Project about Comparing Linux and Windows security. Whatever topics 
+!!! we cover we add the content related to that here. So, this site is like our timeline of security topics we cover. &lt;br/&gt;
+!!! We want to extend this comparison to much greater extend as possible. Hence for that external contribution is welcome. We also continue maintain this site with updated containts.</pre>
 </div>
 <div created="20170909153045879" modified="20170909205058450" tags="[[Before you Begin]]" title="Who should read this?">
 <pre>Few type of people which I think should be the best audience for this research is 
