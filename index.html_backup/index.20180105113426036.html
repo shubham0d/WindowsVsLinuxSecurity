@@ -9598,7 +9598,7 @@ exports.details = DetailsWidget;
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20180105115205121" title="$:/state/showeditpreview">
+<div created="20170907105631882" modified="20180105112554049" title="$:/state/showeditpreview">
 <pre>no</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
@@ -9667,7 +9667,7 @@ exports.details = DetailsWidget;
 <div created="20171103122553855" modified="20180104162547534" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
 <pre>open</pre>
 </div>
-<div list="[[Exploiting Windows Program Loading]] [[Exploiting Windows Login Security]] __Introduction__" title="$:/StoryList">
+<div list="[[Hash harvasting]] [[Exploiting Windows Program Loading]] [[Exploiting Windows Login Security]] [[Windows Login]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10554,7 +10554,7 @@ To stop these type of attacks os vendors have proposed two mitigation techniques
 
 &lt;/$details&gt;</pre>
 </div>
-<div accordion1="" accordion2="" accordion3="" created="20180104161122765" modified="20180105115226659" tags="[[Windows Login]]" title="Exploiting Windows Login Security">
+<div created="20180104161122765" modified="20180105113126340" tags="[[Windows Login]]" title="Exploiting Windows Login Security">
 <pre>!Issues with LM Hashing
 
 LM stored passwords have a few distinct disadvantages. The first of these is that the encryption is based on the Data Encryption Standard (DES). DES originated from a 1970s IBM project that was eventually modified by NIST, sponsored by the NSA, and released as an ANSI standard in 1981. DES was considered secure for many years but came under scrutiny in the nineties due to its small key size of only 56-bits. This came to a head in 1998 when the Electronic Frontier Foundation was able to crack DES in about 23 hours. Since this, DES has been considered insecure and has since been replaced with Triple-DES and AES. In short, it’s another encryption standard that has fallen victim to modern computing power and can be cracked in no time at all.
@@ -10586,11 +10586,11 @@ the resulting output (but not the original password) is stored with the salt in 
 !Common exploitation methods
 
 &lt;$button&gt;
-&lt;$action-setfield accordion1=&quot;open&quot; accordion2=&quot;open&quot; accordion3=&quot;open&quot;/&gt;
+&lt;$action-setfield accordion1=&quot;open&quot; accordion2=&quot;open&quot;/&gt;
 Open all
 &lt;/$button&gt; 
 &lt;$button&gt;
-&lt;$action-setfield accordion1=&quot;&quot; accordion2=&quot;&quot; accordion3=&quot;&quot;/&gt;
+&lt;$action-setfield accordion1=&quot;&quot; accordion2=&quot;&quot;/&gt;
 Close all
 &lt;/$button&gt;
 
@@ -10651,61 +10651,7 @@ requiring the associated plaintext password as is normally the case.
 Before an attacker can carry out a pass-the-hash attack, they must obtain the password hashes of the
 target user accounts. To this end, penetration testers and attackers can harvest password hashes using a
 number of different methods:&lt;br/&gt;
-[[Click here|Hash harvasting]]
-
-&lt;br/&gt;
-In a pass the hash attack, the goal is to use the hash directly without cracking it,this makes time con-
-suming password attacks less needed.&lt;br/&gt;
-Pass the-hash technique itself is not new. It was first published in 1997 when Paul Ashton posted an
-exploit called ”NT Pass the Hash” on Bugtraq (Securityfocus, 1997).However, the knowledge of this
-attack and its severity remains poor. Password hashes are loaded into the Local Security Auth ority
-Subsystem (Lsass).Lsass runs as the executable \\%SystemRoot%\System32\Lsass.exe\\ , which
-is responsible for user authentication, among other things ( Russinovich,Solomon, Ionescu,2009).
-Using hash dumping tools, an attacker can dump the passwords hashes for further use(e.g. pass-the-hash
-attack). It is important to note that dumping password hashes from the Windows SAM database or from
-memory requires administrative privileges.
-&lt;center&gt;[img[compare|images/passthehash.png]]&lt;/center&gt;
-&lt;center&gt;A password transformed into an LM hash&lt;/center&gt;
-
-# The attacker obtains the hashes, by dumping passwords hashes from”Victim” server.
-# The attacker, using pass-the-hash tools, can place one of the hashes obtained (preferably for a user with administrative privileges) in his local Lsass.
-# Going forward, Windows will automatically provide the new credentials on the attacker’s behalf whenever the attacker tries to access the ”Victim” server without the need to provide a password.
-&lt;br/&gt;
-Pass-the-hash eliminates the need for time consuming attacks such as password cracking or pass-
-word guessing (Johansson, 2009).
-&lt;br/&gt;
-The pass-the-hash tools that were tested to work are:
-
-* Pshtoolkit
-* Msvctl
-* Metasploit PSEXEC module
-* Tenable smbs
-* hell
-* JoMo
-* kun (FoFus pass-the-hash patch).
-&lt;/$details&gt;
-
-&lt;$details summary=&quot;Other attacks&quot; state=&quot;!!accordion3&quot;&gt;
-
-&lt;br/&gt;
-
-!! 1) Brute force
-A brute force attack program starts by iterating through all of the possible character for a single character password. Then the program moves on to two-character password combinations.When you consider there are 26 lower case letters, 26 upper case letters, 10 digits and about 32 non alphanumeric characters, you have about 94 possible guesses for each character in a password.
-
-!! 2) The dictionary attack
-A dictionary attack program uses a ”dictionary” of possible passwords. The dictionary may
-be a dictionary like Webster’s Dictionary or it may be a dictionary containing common male
-names,common female names, common pet names, popular movie titles, slang words, etc. Dic-
-tionary password cracking is much, much faster than the brute force methods.
-
-!! 3) Rainbow attack
-A connection between a hash value and its corresponding password. By having this connection
-precalculated for all possible hash values, a quick search through the tables for a desired hash
-value can reveal the password.
-
-!! 4) Attack through bootable device
-Another issue with SAM file is it persist in storage even after windows shut down. This case can be used to do some attacks through bootable media. An example is through a tool chnpwd which is a linux based iso tool used for windows password cracking.
-&lt;/$details&gt;</pre>
+[[Click here|Hash harvasting]]</pre>
 </div>
 <div accordion1="" accordion2="" accordion3="" accordion4="open" created="20171031153728026" modified="20171113161522482" tags="[[Windows Loader]]" title="Exploiting Windows Program Loading">
 <pre>! Issues with CreateProcess
