@@ -269,8 +269,6 @@ Error message and password prompt
 
 <li>$:/state/toc/Contents-Program Execution-209360082</li>
 
-<li>$:/state/toc/Contents/Login Security-Linux Login-209360082</li>
-
 <li>$:/state/toc/Contents/Login Security-Windows Login-209360082</li>
 
 <li>$:/state/toc/Contents/Program Execution-Program Loading-209360082</li>
@@ -475,8 +473,6 @@ Error message and password prompt
 
 <li>defaultBackground</li>
 
-<li>Exploiting Linux Login Security</li>
-
 <li>Exploiting Linux Program Loading</li>
 
 <li>Exploiting Windows Login Security</li>
@@ -500,8 +496,6 @@ Error message and password prompt
 <li>Login Security</li>
 
 <li>NTLM Hash</li>
-
-<li>PAM</li>
 
 <li>Program Execution</li>
 
@@ -9604,8 +9598,8 @@ exports.details = DetailsWidget;
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20180105150712487" title="$:/state/showeditpreview">
-<pre>yes</pre>
+<div created="20170907105631882" modified="20180105115205121" title="$:/state/showeditpreview">
+<pre>no</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
 <pre>yes</pre>
@@ -9652,31 +9646,28 @@ exports.details = DetailsWidget;
 <div created="20170909154550348" modified="20171113160753874" title="$:/state/toc/Contents-Before you Begin-209360082">
 <pre>close</pre>
 </div>
-<div created="20171028180156863" modified="20180105151205250" title="$:/state/toc/Contents-Login Security-209360082">
+<div created="20171028180156863" modified="20180105121652537" title="$:/state/toc/Contents-Login Security-209360082">
+<pre>open</pre>
+</div>
+<div created="20171029100419970" modified="20180105115759589" title="$:/state/toc/Contents-Program Execution-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029100419970" modified="20180105151202057" title="$:/state/toc/Contents-Program Execution-209360082">
-<pre>close</pre>
+<div created="20180104160644881" modified="20180104161204515" title="$:/state/toc/Contents/Login Security-Windows Login-209360082">
+<pre>open</pre>
 </div>
-<div created="20180105150636502" modified="20180105151203153" title="$:/state/toc/Contents/Login Security-Linux Login-209360082">
-<pre>close</pre>
-</div>
-<div created="20180104160644881" modified="20180105151204301" title="$:/state/toc/Contents/Login Security-Windows Login-209360082">
-<pre>close</pre>
-</div>
-<div created="20171029102407659" modified="20180105151200533" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
-<pre>close</pre>
+<div created="20171029102407659" modified="20171113084531114" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
+<pre>open</pre>
 </div>
 <div created="20171112102653681" modified="20180104161100879" title="$:/state/toc/Contents/Program Execution/Program Loading-Linux Loader-209360082">
 <pre>close</pre>
 </div>
-<div created="20171031153920976" modified="20180105151159137" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
-<pre>close</pre>
+<div created="20171031153920976" modified="20180104161418034" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
+<pre>open</pre>
 </div>
-<div created="20171103122553855" modified="20180105151158100" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
-<pre>close</pre>
+<div created="20171103122553855" modified="20180104162547534" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
+<pre>open</pre>
 </div>
-<div list="[[Exploiting Linux Login Security]] __Introduction__" title="$:/StoryList">
+<div list="[[Linux Login]] __Introduction__" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -10533,31 +10524,6 @@ The project is hosted on github [[link|https://github.com/shubham0d/WindowsVsLin
 <div _canonical_uri="images/62.jpg" created="20170910090008496" modified="20170910090041353" tags="" title="defaultBackground" type="image/jpeg">
 <pre></pre>
 </div>
-<div created="20180105150603544" modified="20180105151125361" tags="[[Linux Login]]" title="Exploiting Linux Login Security">
-<pre>!Issues with Linux Login Security
-From the initial days of Unix, passwords were stored in a file called as ///etc/password//. And a major
-loophole in this single file, is that the file is world readable. Which means any user in the system can
-read that file. This was done purposely because the file contains critical user related information other
-than passwords, and many applications and system tools require that information to function properly.
-
-!Desktop Linux Password Stealer
-
-In this attack the user password of an administrative user on a desktop Linux system when it is entered for unlocking the screen or for doing administrative actions using PolicyKit. Then, it escalates to
-root privileges using sudo and the stolen user password. It exploits the design weakness that there is
-no trusted channel for transferring the password from the keyboard to the actual password verification
-against the shadow file (which is running as root since ///etc/shadow// is only readable to the root user).
-Both screensavers (//xscreensaver/gnome-screensaver//) and PolicyKit use a component running under the
-current user account to query for the password and then pass it to a setuid-root binary to do the password
-verification. Therefore, it is possible to inject a password stealer after compromising the user account.
-Since sudo requires only the user password (and not the root password of the system), stealing the user
-password of an administrative user directly allows escalating to root privileges.
-&lt;br/&gt;
-''//You can use available metasploit module to use this exploit://''
-[[exploit link|https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/linux/local/desktop_privilege_escalation.rb]]
-
-&lt;br/&gt;
-Some other tools like john the ripper can be used to crack the linux password but it required access to shadow file which can only be available through root permission. Beside that we face regular vulnerabilities in PAM but its present state is quite secure.</pre>
-</div>
 <div accordion1="" created="20171111040354076" modified="20171114093255458" tags="[[Linux Loader]]" title="Exploiting Linux Program Loading">
 <pre>&lt;$button&gt;
 &lt;$action-setfield accordion1=&quot;open&quot;/&gt;
@@ -11093,8 +11059,9 @@ Well, //_libc_start_main// calls //_libc_init_first//  who immediately uses secr
 
 --</pre>
 </div>
-<div created="20171028180138383" modified="20180105150524251" tags="[[Login Security]]" title="Linux Login">
+<div created="20171028180138383" modified="20180105122124133" tags="[[Login Security]]" title="Linux Login">
 <pre>
+
 In Linux System’s passwords of user with other details get saved in ///etc/shadow// file
 
 [img[shadow password|images/shadow.png]]
@@ -11103,34 +11070,7 @@ In Linux System’s passwords of user with other details get saved in ///etc/sha
 By default the password is stored in one way hash function in linux systems with SHA-512 hash. SHA-
 512 is quite secure as compare to md4 used in windows.&lt;br/&gt;
 Linux also use salting to increase the strength of password hash. Lets understand all the field present
-for a user in ///etc/shadow//
-[img[shadow password|images/pwd.png]]
-
-&lt;br/&gt;
-
-''The first field is a numerical number that tell’s you the hashing algorithm that’s being used.''
-
- * $1 = MD5 hashing algorithm.
- * $2 =Blowfish Algorithm is in use.
- * $2a=eksblowfish Algorithm
- * $5 =SHA-256 Algorithm
- * $6 =SHA-512 Algorithm
-&lt;br/&gt;
-
-''The second field is the salt value'': Salt value is nothing but a random data that’s generated to combine with the original password
-
- ''The last field is the hash value of salt+user password''
-
-! PAM (Pluggable Authentication Modules)
-
-Traditionally user authentication is programmed directly into applications. With this method each
-developer has to write his own authentication functions. Using PAM (Pluggable Authentication Mod-
-ules), applications can be developed with a PAM interface, and the system administrator can choose
-any number of PAM modules to do authentication and other tasks. This separates user authentication
-from the application, and allows “plugging in” of different authentication methods, without the need to rewrite the application. PAM is built into many Linux distributions, including Caldera 1.3, 2.2 and later; Debian 2.2 and later; Turbo Linux 3.6 and later; Red Hat 5.0 and later; and SuSE 6.2 (partial support).
-FreeBSD supports PAM from version 3.1. PAM (Pluggable Authentication Modules) is a suite of shared
-libraries that enable the local system administrator to choose how applications authenticate users.
-[[more about PAM|PAM]]</pre>
+for a user in ///etc/shadow//</pre>
 </div>
 <div created="20180104155857046" modified="20180104162821271" title="LM Hash">
 <pre>The LM(LAN Manager) hash was one of the first password hashing algorithms to be used by Windows
@@ -11185,66 +11125,6 @@ the password to Unicode, the MD4 algorithm is used to produce the NT hash. In pr
 “PassWord123”, once converted, would be represented as “//67A54E1C9058FCA16498061B96863248//”.
 MD4 is considered to be significantly stronger than DES as it allows for longer password lengths, it allows for distinction between uppercase and lowercase letters and it does not split the password into
 smaller, easier to crack chunks.</pre>
-</div>
-<div created="20180105145537346" modified="20180105150419522" tags="" title="PAM">
-<pre>PAM contains configuration file for different services.The function of the configuration file(s) is to provide a mapping from the application’s service name to a selection of modules that provide authentication services to the raw application. When a pam aware application with a file in /etc/pam.d starts, the PAM library loads the configuration for the specified service and constructs four module chains (one for each facility.) If the configuration does not specify any modules for one or more facilities, the configuration for the other service is used instead for these facilities. Linux as a server, can provide several different services (e.g., web, ftp with areas restricted by password control). Through the use of modules, PAM can enable a program to search through several different password databases, even if that program is not explicitly coded for that particular database. Here are some examples of the possibilities that this enables.
-
-* Apache has a module that provides PAM services. Now authentication to use particular directories can be conducted by PAM, which means that the range of modules that are available to PAM can be used, including RADIUS, NIS, NCP (which means that Novell password databases can be used).
-* pppd has a PAMified version (available from RedHat) Now it is possible to use a series of databases to authenticate ppp users. In addition to the normal Linux-based password databases (such as /etc/passwd and /etc/shadow), you can use PAM modules to authenticate against Novell password databases or NT-based password databases.
-* The preceding two examples can be combined. Imagaine that the persons in your office or department are already registered with a username and password in a Novell or NT LAN. If you wanted to use this database on your Linux server (for PPP access, for web access, or even for normal shell access), you can use PAM to authenticate against this existing database, rather than maintain a separate database on both Linux and the LAN server.
-
-&lt;br/&gt;
-PAM configuration files, located in /etc/pam.d and named for the service which they control have three
-fields, with optional fourth and greater fields. The first field in the configuration file is the module-type
-indicatiing which of four PAM management services the correspoding module will provide to the application. PAM deals with four separate types of management services. The type token tells PAM what
-type of authentication is to be used for this module. Modules of the same type can be ”stacked”, requiring a user to meet multiple requirements to be authenticated. The four types of management services
-are: authentication management; account management; session management; and password management.
-
-!!Auth
-Determines whether the user is who they claim to be, usually by a password, but perhaps by a more
-sophistcated means, such as biometrics.
-
-!!Account
-Determines whether the user is allowed to access the service. This is different from establishing whether
-the user is who they say they are. Account management deals with enforcing the expiration of passwords
-and preventing logins during system time.
-
-!!password
-Provides a mechanism for the user to change their authentication. Again, this usually their password.
-
-!!Session
-Things that should be done before and/or after the user is authenticed. This might included things such
-as mounting/unmounting the user home directory, logging their login/logout, and restricting/unrestrict-
-ing the services available to the user.
-
-!!Control
-PAM modules can be stacked - there can be any number of modules of the same module type for a
-single application. The application is not told of the individual success or failure of any module, only
-of the success or failure of the stack. The control flags determine how each module affects the success
-or failure of the stack. Modules in the stack are executed in the order they are listed in the configuration
-file. The second field in the configuration file is the control token, which tells PAM what should be
-done in if authentication by this module fails. PAM recognizes four control types: required, requisite,
-sufficient, and optional.
-
-!!Requisite
-The module must succeed for the stack of this module type to succeed. Failure to authenticate via this
-module results in immediate denial of authentication.
-
-!!Required
-The module must succeed for the stack of this module type to succeed. Failure also results in denial of
-authentication, although PAM will still call all the other modules listed for this service before denying
-authentication.
-
-!!Sufficient
-Success of this module is sufficient for the stack of this module type to succeed. If authentication by
-this module is successful, PAM will grant authentication.
-
-!!Optional
-Not critical to the success or failure of the stack. If at least one non-optional module succeeds or fails,
-the result of this module is ignored when calculating the success or failure of the stack. Whether this
-module succeeds or fails is only significant if it is the only module of its type for this service.
-&lt;br/&gt;
-''[[More about PAM|http://www.linuxgeek.net/documentation/authentication.phtml]]''</pre>
 </div>
 <div created="20171029100256702" modified="20171029100515120" tags="Contents" title="Program Execution">
 <pre>&lt;$list filter=&quot;[!has[draft.of]tag[Program Execution]sort[created]]&quot;&gt;

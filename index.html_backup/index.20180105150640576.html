@@ -9604,8 +9604,8 @@ exports.details = DetailsWidget;
 <div created="20170908181654869" modified="20170908181654869" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
 </div>
-<div created="20170907105631882" modified="20180105150712487" title="$:/state/showeditpreview">
-<pre>yes</pre>
+<div created="20170907105631882" modified="20180105150323330" title="$:/state/showeditpreview">
+<pre>no</pre>
 </div>
 <div created="20170908171547966" modified="20170908180226608" title="$:/state/ShowPaletteEditor">
 <pre>yes</pre>
@@ -9652,29 +9652,29 @@ exports.details = DetailsWidget;
 <div created="20170909154550348" modified="20171113160753874" title="$:/state/toc/Contents-Before you Begin-209360082">
 <pre>close</pre>
 </div>
-<div created="20171028180156863" modified="20180105151205250" title="$:/state/toc/Contents-Login Security-209360082">
+<div created="20171028180156863" modified="20180105121652537" title="$:/state/toc/Contents-Login Security-209360082">
+<pre>open</pre>
+</div>
+<div created="20171029100419970" modified="20180105115759589" title="$:/state/toc/Contents-Program Execution-209360082">
 <pre>close</pre>
 </div>
-<div created="20171029100419970" modified="20180105151202057" title="$:/state/toc/Contents-Program Execution-209360082">
+<div created="20180105150636502" modified="20180105150638072" title="$:/state/toc/Contents/Login Security-Linux Login-209360082">
 <pre>close</pre>
 </div>
-<div created="20180105150636502" modified="20180105151203153" title="$:/state/toc/Contents/Login Security-Linux Login-209360082">
-<pre>close</pre>
+<div created="20180104160644881" modified="20180104161204515" title="$:/state/toc/Contents/Login Security-Windows Login-209360082">
+<pre>open</pre>
 </div>
-<div created="20180104160644881" modified="20180105151204301" title="$:/state/toc/Contents/Login Security-Windows Login-209360082">
-<pre>close</pre>
-</div>
-<div created="20171029102407659" modified="20180105151200533" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
-<pre>close</pre>
+<div created="20171029102407659" modified="20171113084531114" title="$:/state/toc/Contents/Program Execution-Program Loading-209360082">
+<pre>open</pre>
 </div>
 <div created="20171112102653681" modified="20180104161100879" title="$:/state/toc/Contents/Program Execution/Program Loading-Linux Loader-209360082">
 <pre>close</pre>
 </div>
-<div created="20171031153920976" modified="20180105151159137" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
-<pre>close</pre>
+<div created="20171031153920976" modified="20180104161418034" title="$:/state/toc/Contents/Program Execution/Program Loading-Windows Loader-209360082">
+<pre>open</pre>
 </div>
-<div created="20171103122553855" modified="20180105151158100" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
-<pre>close</pre>
+<div created="20171103122553855" modified="20180104162547534" title="$:/state/toc/Contents/Program Execution/Program Loading/Windows Loader-Exploiting Windows Program Loading-209360082">
+<pre>open</pre>
 </div>
 <div list="[[Exploiting Linux Login Security]] __Introduction__" title="$:/StoryList">
 <pre></pre>
@@ -10533,30 +10533,8 @@ The project is hosted on github [[link|https://github.com/shubham0d/WindowsVsLin
 <div _canonical_uri="images/62.jpg" created="20170910090008496" modified="20170910090041353" tags="" title="defaultBackground" type="image/jpeg">
 <pre></pre>
 </div>
-<div created="20180105150603544" modified="20180105151125361" tags="[[Linux Login]]" title="Exploiting Linux Login Security">
-<pre>!Issues with Linux Login Security
-From the initial days of Unix, passwords were stored in a file called as ///etc/password//. And a major
-loophole in this single file, is that the file is world readable. Which means any user in the system can
-read that file. This was done purposely because the file contains critical user related information other
-than passwords, and many applications and system tools require that information to function properly.
-
-!Desktop Linux Password Stealer
-
-In this attack the user password of an administrative user on a desktop Linux system when it is entered for unlocking the screen or for doing administrative actions using PolicyKit. Then, it escalates to
-root privileges using sudo and the stolen user password. It exploits the design weakness that there is
-no trusted channel for transferring the password from the keyboard to the actual password verification
-against the shadow file (which is running as root since ///etc/shadow// is only readable to the root user).
-Both screensavers (//xscreensaver/gnome-screensaver//) and PolicyKit use a component running under the
-current user account to query for the password and then pass it to a setuid-root binary to do the password
-verification. Therefore, it is possible to inject a password stealer after compromising the user account.
-Since sudo requires only the user password (and not the root password of the system), stealing the user
-password of an administrative user directly allows escalating to root privileges.
-&lt;br/&gt;
-''//You can use available metasploit module to use this exploit://''
-[[exploit link|https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/linux/local/desktop_privilege_escalation.rb]]
-
-&lt;br/&gt;
-Some other tools like john the ripper can be used to crack the linux password but it required access to shadow file which can only be available through root permission. Beside that we face regular vulnerabilities in PAM but its present state is quite secure.</pre>
+<div created="20180105150603544" modified="20180105150640355" tags="[[Linux Login]]" title="Exploiting Linux Login Security">
+<pre></pre>
 </div>
 <div accordion1="" created="20171111040354076" modified="20171114093255458" tags="[[Linux Loader]]" title="Exploiting Linux Program Loading">
 <pre>&lt;$button&gt;
